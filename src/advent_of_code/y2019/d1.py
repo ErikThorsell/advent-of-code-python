@@ -2,7 +2,7 @@
 import time
 
 from advent_of_code.utils.fetch import fetch
-from advent_of_code.utils.parse import split_by_newline
+from advent_of_code.utils.parse import split_number_by_newline
 
 
 def calc(mass: int) -> int:
@@ -27,7 +27,7 @@ def run(year: int, day: int):
     print(f"🌟 Fetching input for {year}/{day} 🌟")
 
     input = fetch(year, day)
-    parsed_input = split_by_newline(input)
+    parsed_input = split_number_by_newline(input)
 
     tic = time.perf_counter()
     s1 = solution_1(parsed_input)
