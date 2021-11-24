@@ -1,0 +1,22 @@
+[tool.poetry]
+name = "advent_of_code"
+version = "0.0.0"
+description = "A Python project with solutions to Advent of Code Challenges"
+authors = ["Erik Thorsell <erik@thorsell.io>"]
+
+[tool.poetry.dependencies]
+python = "^3.10.0"
+requests = "^2.26.0"
+
+[tool.poetry.dev-dependencies]
+pytest = "^3.4"
+black = "^21.4b2"
+flake8 = "^3.9.1"
+mypy = "^0.812"
+
+[tool.poetry.scripts]
+advent_of_code = "advent_of_code.main:main"
+
+[build-system]
+requires = ["poetry>=0.12"]
+build-backend = "poetry.masonry.api"
