@@ -1,30 +1,20 @@
-"""Solution module for Day 1, 2019 """
+"""Solution module for Day X, YEAR"""
 import time
 
 from advent_of_code.utils.fetch import fetch
 from advent_of_code.utils.parse import split_by_newline
 
 
-def calc(mass: int) -> int:
-    return mass // 3 - 2
-
-
 def solution_1(input):
-    return sum([calc(i) for i in input])
+    pass
 
 
 def solution_2(input):
-    sum = 0
-    for i in input:
-        mass = calc(i)
-        while mass > 0:
-            sum += mass
-            mass = calc(mass)
-    return sum
+    pass
 
 
 def run(year: int, day: int):
-    print(f"🌟 Fetching input for {year}/{day} 🌟")
+    print(f"\n🌟 Fetching input for {year}/{day} 🌟")
 
     input = fetch(year, day)
     parsed_input = split_by_newline(input)

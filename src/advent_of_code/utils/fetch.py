@@ -21,7 +21,7 @@ def fetch(year: int, day: int) -> str:
 
     try:
         with open(cookie_path) as fh:
-            cookies = dict(session=fh.read())
+            cookies = dict(session=fh.read().strip())
     except FileNotFoundError:
         print(f"No session cookie found at path: {cookie_path}")
         raise
@@ -36,6 +36,9 @@ def fetch(year: int, day: int) -> str:
         print(f"Something went wrong: {err=}")
 
     aoc_input = response.text.strip()
+    print("-" * 15, " START OF INPUT ", "-" * 15)
+    print(aoc_input)
+    print("-" * 16, " END OF INPUT ", "-" * 16)
 
     with open(input_path, "w") as fh:
         fh.write(aoc_input)
