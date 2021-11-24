@@ -10,14 +10,16 @@ You can find the template [HERE][py-template].
 
 ## Development
 
-1. Create a file: `$REPO/src/advent_of_code/y${year}/d${day}.py`
-2. Make sure the file has a function called: `run()`
-3. Use the CLI `advent_of_code --year ${year} --${day}` to run the corresponding `run()` function
-
 ```
 $> poetry install
 $> advent_of_code --year $year --day $day
 ```
+
+The above will create one solution file: `src/advent_of_code/y${year}/d${day}.py` and one
+test file in `tests/y${year}/test_d${day}.py`.
+Write your solution in the solution file and re-run the `advent_of_code ...` command to run
+your solution.
+Run your tests by running: `pytest`.
 
 <!-- REFERENCES -->
 [poetry]: https://python-poetry.org/
