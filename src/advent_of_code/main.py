@@ -34,7 +34,7 @@ def _pre_processing(year: int, day: int):
         print(f"A solution template has been created in: {solution_path}")
 
     test_dir_path = Path(f"tests/y{year}")
-    test_path = Path(f"tests/y{year}/test_d{day}.py")
+    test_path = Path(f"tests/y{year}/test_{year}_d{day}.py")
     if not test_dir_path.exists():
         test_dir_path.mkdir(parents=True)
 
