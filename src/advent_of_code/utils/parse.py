@@ -20,6 +20,16 @@ def split_str_by_newline(input: str) -> List[str]:
     return split_str_by_separator(input, "\n")
 
 
+def parse_coordinates(input: str) -> List[Tuple[int, int]]:
+    rows = split_str_by_newline(input)
+    p = re.compile(r"(\d+),\s(\d+)")
+    coordinates = list()
+    for row in rows:
+        m = p.match(row)
+        coordinates.append((int(m.group(1)), int(m.group(2))))
+    return coordinates
+
+
 def parse_fabric_claims(input: str) -> Dict[int, Tuple[int, int, int, int]]:
     rows = split_str_by_newline(input)
     p = re.compile(r"\#(\d+)\s@\s((\d+),(\d+)):\s((\d+)x(\d+))")
