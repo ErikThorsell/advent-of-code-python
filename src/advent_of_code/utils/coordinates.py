@@ -11,6 +11,10 @@ def get_min_max_velocity(velocities: List[Tuple[int, int]]) -> Tuple[int, int]:
     return min_x, max_x, min_y, max_y
 
 
+def get_rectangle_in_grid(top_left_coordinate, width_and_height: Tuple[int, int]) -> List[Tuple[int, int]]:
+    pass
+
+
 def get_coordinates(vectors: List[Tuple[Tuple[int, int], Tuple[int, int]]]) -> List[Tuple[int, int]]:
     return [p for (p, v) in vectors]
 
@@ -34,19 +38,13 @@ def move_coordinates(
     return new_coordinates
 
 
-def get_canvas_dimensions(coordinates: List[Tuple[int, int]], verbose=False) -> Tuple[int, int]:
+def get_grid_dimensions(coordinates: List[Tuple[int, int]], verbose=False) -> Tuple[int, int]:
     x_min = min(coordinates, key=itemgetter(0))[0]
     y_min = min(coordinates, key=itemgetter(1))[1]
     x_max = max(coordinates, key=itemgetter(0))[0]
     y_max = max(coordinates, key=itemgetter(1))[1]
     width = x_max - x_min + 1
     height = y_max - y_min + 1
-    if verbose:
-        print(f"{coordinates=}")
-        print(f"{len(coordinates)=}")
-        print(f"{x_min=}, {x_max=}")
-        print(f"{y_min=}, {y_max=}")
-        print(f"{width=}, {height=}")
     return width, height
 
 
