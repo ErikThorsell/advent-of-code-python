@@ -21,7 +21,7 @@ def split_str_by_newline(input: str) -> List[str]:
 
 
 def parse_all_numbers(input: str) -> List[int]:
-    return [int(n) for n in re.findall(r"\d+", input)]
+    return [int(n) for n in re.findall(r"-?\d+", input)]
 
 
 def parse_graph_edges(input: str) -> List[Tuple[str, str]]:
@@ -42,6 +42,16 @@ def parse_coordinates(input: str) -> List[Tuple[int, int]]:
         m = p.match(row)
         coordinates.append((int(m.group(1)), int(m.group(2))))
     return coordinates
+
+
+def parse_star_vectors(input: str) -> List[Tuple[Tuple[int, int], Tuple[int, int]]]:
+    rows = split_str_by_newline(input)
+    points = list()
+    for row in rows:
+        numbers = parse_all_numbers(row)
+        numbers = list(map(int, numbers))
+        points.append(((numbers[0], numbers[1]), (numbers[2], numbers[3])))
+    return points
 
 
 def parse_fabric_claims(input: str) -> Dict[int, Tuple[int, int, int, int]]:
