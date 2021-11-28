@@ -20,6 +20,10 @@ def split_str_by_newline(input: str) -> List[str]:
     return split_str_by_separator(input, "\n")
 
 
+def parse_all_numbers(input: str) -> List[int]:
+    return [int(n) for n in re.findall(r"\d+", input)]
+
+
 def parse_graph_edges(input: str) -> List[Tuple[str, str]]:
     rows = split_str_by_newline(input)
     p = re.compile(r"Step (\w) must be finished before step (\w) can begin.")
