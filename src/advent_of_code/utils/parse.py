@@ -24,6 +24,16 @@ def parse_all_numbers(input: str) -> List[int]:
     return [int(n) for n in re.findall(r"-?\d+", input)]
 
 
+def parse_sub_commands(input: str) -> List[Tuple[int, int]]:
+    rows = split_str_by_newline(input)
+    commands = list()
+    for row in rows:
+        direction = row.split(" ")[0]
+        distance = int(row.split(" ")[1])
+        commands.append((direction, distance))
+    return commands
+
+
 def parse_graph_edges(input: str) -> List[Tuple[str, str]]:
     rows = split_str_by_newline(input)
     p = re.compile(r"Step (\w) must be finished before step (\w) can begin.")
@@ -91,17 +101,13 @@ def parse_guard_records(input: str) -> Dict[int, Dict[datetime, bool]]:
         elif "falls asleep" in row:
             duration = timestamp - last_timestamp
             for d in range(duration.seconds // 60):
-                guard_tracker[guard_id][
-                    last_timestamp + timedelta(seconds=d * 60)
-                ] = True
+                guard_tracker[guard_id][last_timestamp + timedelta(seconds=d * 60)] = True
             last_timestamp = timestamp
 
         elif "wakes up" in row:
             duration = timestamp - last_timestamp
             for d in range(duration.seconds // 60):
-                guard_tracker[guard_id][
-                    last_timestamp + timedelta(seconds=d * 60)
-                ] = False
+                guard_tracker[guard_id][last_timestamp + timedelta(seconds=d * 60)] = False
             last_timestamp = timestamp
 
     return guard_tracker
