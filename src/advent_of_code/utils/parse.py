@@ -3,6 +3,8 @@ from datetime import datetime, timedelta
 import re
 from typing import Dict, List, Tuple
 
+import numpy as np
+
 
 def split_number_by_separator(input: str, sep: str) -> List[int]:
     return [int(s) for s in input.split(sep) if s]
@@ -111,3 +113,21 @@ def parse_guard_records(input: str) -> Dict[int, Dict[datetime, bool]]:
             last_timestamp = timestamp
 
     return guard_tracker
+
+
+def parse_bingo(input: str):
+    def parse_bingo_boards(rows):
+        str_boards = split_str_by_separator(rows, "\n\n")
+        boards = list()
+        for str_board in str_boards:
+            board = np.zeros((5, 5))
+            for rx, row in enumerate(str_board.split("\n")):
+                for cx, col in enumerate(row.split()):
+                    board[rx, cx] = int(col)
+            boards.append(board)
+
+        return boards
+
+    order = [int(n) for n in input.split("\n")[0].split(",")]
+    boards = parse_bingo_boards("\n".join(input.split("\n")[1:]).strip())
+    return order, boards
