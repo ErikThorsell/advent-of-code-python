@@ -23,6 +23,26 @@ def get_velocities(vectors: List[Tuple[Tuple[int, int], Tuple[int, int]]]) -> Li
     return [v for (p, v) in vectors]
 
 
+def line_is_diagonal(c1, c2: Tuple[int, int]) -> bool:
+    if c1[0] == c2[0] or c1[1] == c2[1]:
+        return False
+    return True
+
+
+def _get_coordinates_between_hor_ver(c1, c2: Tuple[int, int]) -> List[Tuple[int, int]]:
+    dx = 1 if c2[0] >= c1[0] else -1
+    dy = 1 if c2[1] >= c1[1] else -1
+    return [(x, y) for x in range(c1[0], c2[0] + dx, dx) for y in range(c1[1], c2[1] + dy, dy)]
+
+
+def get_coordinates_between(c1, c2: Tuple[int, int]) -> List[Tuple[int, int]]:
+    if line_is_diagonal(c1, c2):
+        dx = 1 if c2[0] >= c1[0] else -1
+        dy = 1 if c2[1] >= c1[1] else -1
+        return [(x + dx, y + dy) for (x, y) in zip(range(c1[0] - dx, c2[0], dx), range(c1[1] - dy, c2[1], dy))]
+    return _get_coordinates_between_hor_ver(c1, c2)
+
+
 def move_coordinates(
     coordinates: List[Tuple[Tuple[int, int], Tuple[int, int]]], backwards=False
 ) -> List[Tuple[Tuple[int, int], Tuple[int, int]]]:

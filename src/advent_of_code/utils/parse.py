@@ -131,3 +131,12 @@ def parse_bingo(input: str):
     order = [int(n) for n in input.split("\n")[0].split(",")]
     boards = parse_bingo_boards("\n".join(input.split("\n")[1:]).strip())
     return order, boards
+
+
+def parse_line_segments(input: str) -> List[Tuple[Tuple[int, int], Tuple[int, int]]]:
+    rows = split_str_by_newline(input)
+    line_segments = list()
+    for row in rows:
+        numbers = parse_all_numbers(row)
+        line_segments.append(((numbers[0], numbers[1]), (numbers[2], numbers[3])))
+    return line_segments
