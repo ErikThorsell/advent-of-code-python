@@ -1,6 +1,7 @@
 """Solution module for Day X, YEAR"""
 import copy
 import time
+from sys import maxsize
 
 from advent_of_code.utils.fetch import fetch
 from advent_of_code.utils.parse import split_number_by_newline
