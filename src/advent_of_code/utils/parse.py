@@ -140,3 +140,13 @@ def parse_line_segments(input: str) -> List[Tuple[Tuple[int, int], Tuple[int, in
         numbers = parse_all_numbers(row)
         line_segments.append(((numbers[0], numbers[1]), (numbers[2], numbers[3])))
     return line_segments
+
+
+def parse_seven_segment(input: str) -> List[Tuple[str, str]]:
+    rows = split_str_by_newline(input)
+    signals = list()
+    for row in rows:
+        patterns = row.split("|")[0].strip()
+        output = row.split("|")[1].strip()
+        signals.append((patterns, output))
+    return signals
