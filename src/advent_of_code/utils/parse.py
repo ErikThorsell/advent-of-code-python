@@ -26,6 +26,13 @@ def parse_all_numbers(input: str) -> List[int]:
     return [int(n) for n in re.findall(r"-?\d+", input)]
 
 
+def parse_each_digit(input: str) -> List[List[int]]:
+    all_digits = list()
+    for row in input.strip().split("\n"):
+        all_digits.append([int(rd) for rd in row])
+    return all_digits
+
+
 def parse_sub_commands(input: str) -> List[Tuple[int, int]]:
     rows = split_str_by_newline(input)
     commands = list()
