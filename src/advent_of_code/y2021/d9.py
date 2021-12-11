@@ -4,43 +4,22 @@ import copy
 from math import prod
 import time
 from sys import maxsize
-from types import prepare_class
 from typing import List
 
-import numpy as np
-
 from advent_of_code.utils.fetch import fetch
-from advent_of_code.utils.parse import (
-    parse_each_digit,
-)
+from advent_of_code.utils.grid import get_adjacent, get_cell
+from advent_of_code.utils.parse import parse_each_digit
 
 
 def risk_level(low_points: List[int]) -> int:
     return sum(low_points) + len(low_points)
 
 
-def get_adjacent(x, y):
-    return [
-        (x, y - 1),
-        (x, y + 1),
-        (x - 1, y),
-        (x + 1, y),
-    ]
-
-
-def get_cell(grid, ix, iy):
-    if iy < 0 or iy >= len(grid):
-        return maxsize
-    if ix < 0 or ix >= len(grid[0]):
-        return maxsize
-    return grid[iy][ix]
-
-
 def find_low_points(grid):
     low_points = {}
     for iy, _ in enumerate(grid):
         for ix, c in enumerate(grid[iy]):
-            neighbors = [get_cell(grid, x, y) for (x, y) in get_adjacent(ix, iy)]
+            neighbors = [get_cell(grid, x, y) for (x, y) in get_adjacent(ix, iy, 4)]
             if all(c < n for n in neighbors):
                 low_points[(ix, iy)] = c
     return low_points
@@ -52,7 +31,7 @@ def get_basin_size(grid, root):
 
     while queue:
         (ix, iy) = queue.popleft()
-        for n in get_adjacent(ix, iy):
+        for n in get_adjacent(ix, iy, 4):
             if n not in visited and get_cell(grid, n[0], n[1]) < 9:
                 visited.add(n)
                 queue.append(n)

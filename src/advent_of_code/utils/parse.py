@@ -122,6 +122,15 @@ def parse_guard_records(input: str) -> Dict[int, Dict[datetime, bool]]:
     return guard_tracker
 
 
+def parse_grid(input: str):
+    rows = split_str_by_newline(input)
+    grid = np.zeros((len(rows), len(rows[0])))
+    for rx, row in enumerate(rows):
+        for cx, col in enumerate(row):
+            grid[rx, cx] = int(col)
+    return grid
+
+
 def parse_bingo(input: str):
     def parse_bingo_boards(rows):
         str_boards = split_str_by_separator(rows, "\n\n")
