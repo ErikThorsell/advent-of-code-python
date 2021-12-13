@@ -55,7 +55,7 @@ def parse_graph_edges(input: str) -> List[Tuple[str, str]]:
 
 def parse_coordinates(input: str) -> List[Tuple[int, int]]:
     rows = split_str_by_newline(input)
-    p = re.compile(r"(\d+),\s(\d+)")
+    p = re.compile(r"(\d+),\s*(\d+)")
     coordinates = list()
     for row in rows:
         m = p.match(row)
@@ -166,3 +166,8 @@ def parse_seven_segment(input: str) -> List[Tuple[str, str]]:
         output = row.split("|")[1].strip()
         signals.append((patterns, output))
     return signals
+
+
+def parse_folding(input: str):
+    coordinates, instructions = split_str_by_separator(input, "\n\n")
+    return parse_coordinates(coordinates), split_str_by_newline(instructions)

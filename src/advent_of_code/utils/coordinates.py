@@ -82,3 +82,33 @@ def draw_coordinates(coordinates: List[Tuple[int, int]]) -> None:
                 print(".", end="")
         print()
     print()
+
+
+def fold_grid(coordinates: List[Tuple[int, int]], instruction: str) -> List[Tuple[int, int]]:
+    instruction = instruction.split()[-1]
+    direction, coordinate = instruction.split("=")
+    coordinate = int(coordinate)
+
+    folded = list()
+    if direction == "x":
+        for (x, y) in coordinates:
+            if x < coordinate:
+                folded.append((x, y))
+            elif x == coordinate:
+                continue
+            else:
+                folded.append((coordinate + coordinate - x, y))
+
+    elif direction == "y":
+        for (x, y) in coordinates:
+            if y < coordinate:
+                folded.append((x, y))
+            elif y == coordinate:
+                continue
+            else:
+                folded.append((x, coordinate + coordinate - y))
+
+    else:
+        raise ValueError(f"Invalid folding direction: {direction=}")
+
+    return list(set(folded))
