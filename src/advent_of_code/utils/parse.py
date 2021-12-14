@@ -171,3 +171,9 @@ def parse_seven_segment(input: str) -> List[Tuple[str, str]]:
 def parse_folding(input: str):
     coordinates, instructions = split_str_by_separator(input, "\n\n")
     return parse_coordinates(coordinates), split_str_by_newline(instructions)
+
+
+def parse_polymer(input: str):
+    template, rules = split_str_by_separator(input, "\n\n")
+    rules = {x.split("->")[0].strip(): x.split("->")[1].strip() for x in split_str_by_newline(rules)}
+    return template.strip(), rules
