@@ -40,7 +40,7 @@ def determine_pixel(image, cell, algorithm, iteration):
             if (x, y) in image:
                 pixels += image[(x, y)]
             else:
-                pixels += "#" if iteration % 2 != 0 else "."
+                pixels += "#" if algorithm[0] == "#" and iteration % 2 != 0 else "."
 
     binary = pixels.replace(".", "0").replace("#", "1")
     decimal = int(binary, 2)
