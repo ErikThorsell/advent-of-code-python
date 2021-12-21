@@ -84,6 +84,19 @@ def draw_coordinates(coordinates: List[Tuple[int, int]]) -> None:
     print()
 
 
+def draw_dict(dictionary):
+    x_min = min(dictionary.keys(), key=itemgetter(0))[0]
+    y_min = min(dictionary.keys(), key=itemgetter(1))[1]
+    x_max = max(dictionary.keys(), key=itemgetter(0))[0]
+    y_max = max(dictionary.keys(), key=itemgetter(1))[1]
+    for y in range(y_min, y_max + 1):
+        for x in range(x_min, x_max + 1):
+            print(dictionary[(x, y)], end="")
+        print()
+    print()
+    print()
+
+
 def fold_grid(coordinates: List[Tuple[int, int]], instruction: str) -> List[Tuple[int, int]]:
     instruction = instruction.split()[-1]
     direction, coordinate = instruction.split("=")
