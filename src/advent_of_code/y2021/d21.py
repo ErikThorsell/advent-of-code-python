@@ -43,10 +43,8 @@ def solution_1(input):
     die_rolls = 0
 
     while True:
-
-        for player in range(1, 3):
+        for player in [1, 2]:
             game, die_rolls = play_round(game, player, die_rolls)
-
             if game[player - 1][-1] >= 1000:
                 return die_rolls * game[player][-1]
 
