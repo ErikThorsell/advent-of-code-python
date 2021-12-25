@@ -14,7 +14,7 @@ v.....>
 ..vvv.."""
     east, south = parse_sea_cucumbers(example_input)
     example_result = 4
-    assert solution_1(east, south) == example_result
+    assert solution_1(east | south) == example_result
 
 
 def test_solution_1():
@@ -29,4 +29,4 @@ v.v..>>v.v
 ....v..v.>"""
     east, south = parse_sea_cucumbers(example_input)
     example_result = 58
-    assert solution_1(east, south) == example_result
+    assert solution_1(east | south) == example_result

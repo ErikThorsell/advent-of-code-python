@@ -177,3 +177,32 @@ def parse_polymer(input: str):
     template, rules = split_str_by_separator(input, "\n\n")
     rules = {x.split("->")[0].strip(): x.split("->")[1].strip() for x in split_str_by_newline(rules)}
     return template.strip(), rules
+
+
+def parse_cuboids(input: str):
+    res = list()
+    rows = split_str_by_newline(input)
+
+    for instr in rows:
+        mode, cuboids = instr.split()
+        on = mode == "on"
+
+        xs = parse_all_numbers(cuboids.split(",")[0])
+        ys = parse_all_numbers(cuboids.split(",")[1])
+        zs = parse_all_numbers(cuboids.split(",")[2])
+
+        res.append((on, (xs, ys, zs)))
+
+    return res
+
+
+def parse_sea_cucumbers(input: str):
+    east = dict()
+    south = dict()
+    for rx, row in enumerate(split_str_by_newline(input)):
+        for cx, cell in enumerate(row):
+            if cell == ">":
+                east[(cx, rx)] = cell
+            elif cell == "v":
+                south[(cx, rx)] = cell
+    return east, south

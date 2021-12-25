@@ -23,38 +23,40 @@ def draw(grid) -> None:
     print()
 
 
-def move(east, south, width, height):
-    new_east = dict()
-    new_south = dict()
-
-    for (x, y) in east:
-        if ((x + 1) % width, y) not in east | south:
-            new_east[((x + 1) % width, y)] = ">"
+def move_east(sea, width):
+    new_sea = dict()
+    for (x, y) in sea:
+        if sea[(x, y)] == ">" and ((x + 1) % width, y) not in sea:
+            new_sea[((x + 1) % width, y)] = ">"
         else:
-            new_east[(x, y)] = ">"
+            new_sea[(x, y)] = sea[(x, y)]
+    return new_sea
 
-    for (x, y) in south:
-        if (x, (y + 1) % height) not in south | new_east:
-            new_south[(x, (y + 1) % height)] = "v"
+
+def move_south(sea, height):
+    new_sea = dict()
+    for (x, y) in sea:
+        if sea[(x, y)] == "v" and (x, (y + 1) % height) not in sea:
+            new_sea[(x, (y + 1) % height)] = "v"
         else:
-            new_south[(x, y)] = "v"
+            new_sea[(x, y)] = sea[(x, y)]
+    return new_sea
 
-    return new_east, new_south
 
-
-def solution_1(east, south):
-    width, height = get_grid_dimensions(east | south)
+def solution_1(sea):
+    width, height = get_grid_dimensions(sea)
 
     iterations = 0
     while True:
         iterations += 1
 
-        new_east, new_south = move(east, south, width, height)
+        east_sea = move_east(sea, width)
+        new_sea = move_south(east_sea, height)
 
-        if new_east == east and new_south == south:
+        if sea == new_sea:
             return iterations
 
-        east, south = new_east, new_south
+        sea = new_sea
 
 
 def run(year: int, day: int):
@@ -64,6 +66,6 @@ def run(year: int, day: int):
     east, south = parse_sea_cucumbers(input)
 
     tic = time.perf_counter()
-    s1 = solution_1(east, south)
+    s1 = solution_1(east | south)
     toc = time.perf_counter()
     print(f"Solution for problem 1: {s1}, acquired in: {toc-tic:0.4f} seconds")
