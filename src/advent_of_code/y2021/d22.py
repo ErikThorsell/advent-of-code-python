@@ -34,35 +34,25 @@ def subtract_overlap(ca, cb):
         (x0a, x1a), (y0a, y1a), (z0a, z1a) = ca
         (x0b, x1b), (y0b, y1b), (z0b, z1b) = cb
 
-        print(f"{ca=}")
-        print(f"{cb=}")
-
         x_overlap = list(zip((x0a, max(x0a, x0b), x1b + 1), (x0b - 1, min(x1a, x1b), x1a)))
-        print(f"{x_overlap=}")
         for xi, (x0, x1) in enumerate(x_overlap):
             if x0 > x1:
                 continue
 
             y_overlap = list(zip((y0a, max(y0a, y0b), y1b + 1), (y0b - 1, min(y1a, y1b), y1a)))
-            print(f"{y_overlap=}")
             for yi, (y0, y1) in enumerate(y_overlap):
                 if y0 > y1:
                     continue
 
                 z_overlap = list(zip((z0a, max(z0a, z0b), z1b + 1), (z0b - 1, min(z1a, z1b), z1a)))
-                print(f"{z_overlap=}")
                 for zi, (z0, z1) in enumerate(z_overlap):
                     if z0 > z1:
                         continue
 
                     if xi == 1 and yi == 1 and zi == 1:
-                        print(f"{(x0, x1)=}")
-                        print(f"{(y0, y1)=}")
-                        print(f"{(z0, z1)=}")
                         continue
 
                     yield (x0, x1), (y0, y1), (z0, z1)
-        print()
     else:
         yield ca
 
