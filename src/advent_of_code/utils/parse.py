@@ -179,6 +179,17 @@ def parse_polymer(input: str):
     return template.strip(), rules
 
 
+def parse_scanners(input: str):
+    raw_scanners = split_str_by_separator(input, "\n\n")
+    scanners = []
+    for scanner in raw_scanners:
+        beacons = []
+        for line in scanner.split("\n")[1:]:  # get rid of --- scanner x ---
+            beacons.append(tuple([int(c) for c in line.split(",")]))
+        scanners.append(beacons)
+    return scanners
+
+
 def parse_cuboids(input: str):
     res = list()
     rows = split_str_by_newline(input)

@@ -125,3 +125,55 @@ def fold_grid(coordinates: List[Tuple[int, int]], instruction: str) -> List[Tupl
         raise ValueError(f"Invalid folding direction: {direction=}")
 
     return list(set(folded))
+
+
+def rotate_3d(point, rotation):
+    x, y, z = point
+    if rotation == 0:
+        return (x, y, z)
+    if rotation == 1:
+        return (x, -z, y)
+    if rotation == 2:
+        return (x, -y, -z)
+    if rotation == 3:
+        return (x, z, -y)
+    if rotation == 4:
+        return (-x, -y, z)
+    if rotation == 5:
+        return (-x, -z, -y)
+    if rotation == 6:
+        return (-x, y, -z)
+    if rotation == 7:
+        return (-x, z, y)
+    if rotation == 8:
+        return (y, x, -z)
+    if rotation == 9:
+        return (y, -x, z)
+    if rotation == 10:
+        return (y, z, x)
+    if rotation == 11:
+        return (y, -z, -x)
+    if rotation == 12:
+        return (-y, x, z)
+    if rotation == 13:
+        return (-y, -x, -z)
+    if rotation == 14:
+        return (-y, -z, x)
+    if rotation == 15:
+        return (-y, z, -x)
+    if rotation == 16:
+        return (z, x, y)
+    if rotation == 17:
+        return (z, -x, -y)
+    if rotation == 18:
+        return (z, -y, x)
+    if rotation == 19:
+        return (z, y, -x)
+    if rotation == 20:
+        return (-z, x, -y)
+    if rotation == 21:
+        return (-z, -x, y)
+    if rotation == 22:
+        return (-z, y, x)
+    if rotation == 23:
+        return (-z, -y, -x)
