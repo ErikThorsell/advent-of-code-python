@@ -1,6 +1,5 @@
 """TEST MODULE TEMPLATE"""
 from advent_of_code.y2018.d9 import solution_1
-from advent_of_code.y2018.d9 import solution_2
 
 
 def test_solution_1():
