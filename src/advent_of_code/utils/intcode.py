@@ -4,8 +4,9 @@ import numpy as np
 
 class Intcode:
 
-    def __init__(self, program, mode="position"):
+    def __init__(self, program, input_):
         self.memory = program
+        self.input = input_
         self.pos = 0
         self.modes = []
 
@@ -14,91 +15,80 @@ class Intcode:
         for (address, value) in modifications.items():
             self.memory[address] = value
 
-    def value(self, mode, pos):
+
+    def value(self, mode):
         if mode == 0:
-            return self.memory[self.memory[pos]]
-        return self.memory[pos]
+            return self.memory[self.memory[self.pos]]
+        return self.memory[self.pos]
 
 
     def add_mul(self, opcode):  # [1/2, a, b, c]
         """Addition and multiplication only differ by the np.sum() and np.prod()."""
-        self.pos += 1  # increment to get to parameters
         self.modes += [0] * (3 - len(self.modes))  # pad to handle leading 0 in instruction
+        self.pos += 1  # increment to get to parameters
 
         params = []
         for _ in range(2):  # we only want the modes for a and b
             m = self.modes.pop(0)
-            v = self.memory[self.pos]
-            if m == 0:
-                params.append(self.memory[v])
-            if m == 1:
-                params.append(v)
+            params.append(self.value(m))
             self.pos += 1
 
-        
         # We must pop or the mode list will grow and become wrong
         m = self.modes.pop(0)
         assert m == 0  # x will always be a position in memory (mode 0)
+
         if opcode == 1:
             self.memory[self.memory[self.pos]] = np.sum(params)
         elif opcode == 2:
             self.memory[self.memory[self.pos]] = np.prod(params)
+
         self.pos += 1
+
 
 
     def save(self):  # [3, a]
         self.modes += [0] * (1 - len(self.modes))  # pad to handle leading 0 in instruction
-        m = self.modes.pop(0)  # not used, but we add and pop for consistency
-        assert m == 0
+        assert all(self.modes) == 0
+        _ = self.modes.pop(0)  # not used, but we add and pop for consistency
         v = self.memory[self.pos + 1]
-        self.memory[v] = int(input(f"Input a number to store at position {v}: "))
+        self.memory[v] = int(self.input)
         self.pos += 2
 
 
     def load(self):  # [4, a]
         self.modes += [0] * (1 - len(self.modes))  # pad to handle leading 0 in instruction
-        v = self.memory[self.pos + 1]
-        if m := self.modes.pop(0) == 0:
-            print(self.memory[v])
-        elif m == 1:
-            print(v)
-        self.pos += 2
+        m = self.modes.pop(0)
+        self.pos += 1
+        print(self.value(m))
+        self.pos += 1
 
 
     def jump_t(self):  # [5, a, b]
         self.modes += [0] * (2 - len(self.modes))  # pad to handle leading 0 in instruction
         m = self.modes.pop(0)
 
-        if m == 0:
-            if self.memory[self.memory[self.pos+1]] != 0:
-                self.pos = self.memory[self.memory[self.pos+2]]
-            else:
-                self.pos += 3
-        elif m == 1:
-            if self.memory[self.pos+1] != 0:
-                self.pos = self.memory[self.pos+2]
-            else:
-                self.pos += 3
-        
-        _ = self.modes.pop(0)
+        self.pos += 1
+        if self.value(m) != 0:
+            m = self.modes.pop(0)
+            self.pos += 1
+            self.pos = self.value(m)
+        else:
+            self.pos += 2
+            _ = self.modes.pop(0)
 
 
     def jump_f(self):  # [6, a, b]
         self.modes += [0] * (2 - len(self.modes))  # pad to handle leading 0 in instruction
         m = self.modes.pop(0)
 
-        if m == 0:
-            if self.memory[self.memory[self.pos+1]] == 0:
-                self.pos = self.memory[self.memory[self.pos+2]]
-            else:
-                self.pos += 3
-        elif m == 1:
-            if self.memory[self.pos+1] == 0:
-                self.pos = self.memory[self.pos+2]
-            else:
-                self.pos += 3
-
-        _ = self.modes.pop(0)
+        self.pos += 1
+        if self.value(m) == 0:
+            m = self.modes.pop(0)
+            self.pos += 1
+            self.pos = self.value(m)
+        else:
+            self.pos += 2
+            _ = self.modes.pop(0)
 
 
     def less(self):  # [7, a, b, c]
@@ -158,9 +148,9 @@ class Intcode:
         try:
             while True:
 
-                instruction = self.memory[self.pos]
-                opcode = int(str(instruction)[-2:])
-                self.modes = [int(p) for p in str(instruction)[:-2][::-1]]
+                instr = self.memory[self.pos]
+                opcode = int(str(instr)[-2:])
+                self.modes = [int(p) for p in str(instr)[:-2][::-1]]
 
                 match opcode:
                     case 99:
@@ -192,7 +182,7 @@ class Intcode:
 
         except:
             print(f"Counter: {counter}")
-            print(f"Instr: {instruction}")
+            print(f"Instr: {instr}")
             print(f"OP Code: {opcode}")
             print(f"Modes: {self.modes}")
             print(f"Position: {self.pos}")
