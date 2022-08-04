@@ -1,7 +1,6 @@
 from io import StringIO
 
 from advent_of_code.utils.intcode import Intcode
-from advent_of_code.y2019.dx import Computer
 
 
 def test_day_2():
@@ -122,57 +121,3 @@ def test_day_5():
     ]
     intcode = Intcode(program, 5)
     intcode.run()
-
-
-def test_dx():
-    program = [
-        3,
-        21,
-        1008,
-        21,
-        8,
-        20,
-        1005,
-        20,
-        22,
-        107,
-        8,
-        21,
-        20,
-        1006,
-        20,
-        31,
-        1106,
-        0,
-        36,
-        98,
-        0,
-        0,
-        1002,
-        21,
-        125,
-        20,
-        4,
-        20,
-        1105,
-        1,
-        46,
-        104,
-        999,
-        1105,
-        1,
-        46,
-        1101,
-        1000,
-        1,
-        20,
-        4,
-        20,
-        1105,
-        1,
-        46,
-        98,
-        99,
-    ]
-    comp = Computer(program, 8)
-    comp.compute()
