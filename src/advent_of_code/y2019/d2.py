@@ -12,7 +12,7 @@ def solution_1(input) -> int:
     intcode = Intcode(input)
     intcode.modify({1: 12, 2: 2})
     intcode.run()
-    return intcode.memory[0]
+    return intcode.program_mem[0]
 
 
 def solution_2(input) -> int:
@@ -23,7 +23,7 @@ def solution_2(input) -> int:
             intcode.modify({1: noun, 2: verb})
             try:
                 intcode.run()
-                if intcode.memory[0] == 19690720:
+                if intcode.program_mem[0] == 19690720:
                     return 100 * noun + verb
             except:
                 continue

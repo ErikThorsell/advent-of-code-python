@@ -9,6 +9,7 @@ class Intcode:
         self.init = init
         self.output = None
         self.pos = 0
+        self.relative_base = 0
         self.modes = []
         self.first_run = True
         self.done = False
@@ -22,7 +23,12 @@ class Intcode:
     def value(self, mode):
         if mode == 0:
             return self.memory[self.memory[self.pos]]
-        return self.memory[self.pos]
+        elif mode == 1:
+            return self.memory[self.pos]
+        elif mode == 2:
+            return self.memory[self.memory[self.pos + self.relative_base]]
+        else:
+            raise ValueError(f"Unknown mode: {mode}")
 
 
     def add_mul(self, opcode):  # [1/2, a, b, c]
@@ -71,10 +77,8 @@ class Intcode:
     def load(self):  # [4, a]
         self.pos += 2
         self.modes += [0] * (1 - len(self.modes))  # pad to handle leading 0 in instruction
-        m = self.modes.pop(0)
+        _ = self.modes.pop(0)
         self.output = self.memory[self.memory[self.pos-1]]
-#        print(f"Output: {self.output}")
-#        self.pos += 1
 
 
     def jump_t(self):  # [5, a, b]
@@ -154,6 +158,14 @@ class Intcode:
 
         self.pos += 1
 
+    
+    def adj_base(self):  # [9, a]
+        self.pos += 1
+        self.modes += [0] * (1 - len(self.modes))  # pad to handle leading 0 in instruction
+        m = self.modes.pop(0)
+        self.relative_base += self.value(m)
+        self.pos += 1
+
 
     def run(self, signal=None):
         """Run the program in memory."""
@@ -187,6 +199,8 @@ class Intcode:
                         self.less()
                     case 8:
                         self.eq()
+                    case 9:
+                        self.adj_base()
                     case _:
                         raise ValueError(f"Unknown OP Code: {opcode}")
             

@@ -7,28 +7,28 @@ def test_day_2():
     program = [1, 9, 10, 3, 2, 3, 11, 0, 99, 30, 40, 50]
     intcode = Intcode(program)
     intcode.run()
-    assert intcode.memory[0] == 3500
+    assert intcode.program_mem[0] == 3500
 
 
 def test_save_load():
     program = [3, 0, 4, 0, 99]
     intcode = Intcode(program)
     intcode.run()
-    assert intcode.memory[0] == int(input("Input the same number again: "))
+    assert intcode.program_mem[0] == int(input("Input the same number again: "))
 
 
 def test_modes():
     program = [1002, 4, 3, 4, 33]
     intcode = Intcode(program)
     intcode.run()
-    assert intcode.memory[4] == 99
+    assert intcode.program_mem[4] == 99
 
 
 def test_neg():
     program = [1101, 100, -1, 4, 0]
     intcode = Intcode(program)
     intcode.run()
-    print(intcode.memory)
+    print(intcode.program_mem)
 
 
 def test_jump_pos():
