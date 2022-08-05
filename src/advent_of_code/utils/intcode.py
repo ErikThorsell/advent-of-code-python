@@ -4,9 +4,10 @@ import numpy as np
 
 class Intcode:
 
-    def __init__(self, program, input_):
+    def __init__(self, program, input_=None):
         self.memory = program
         self.input = input_
+        self.output = None
         self.pos = 0
         self.modes = []
 
@@ -49,17 +50,27 @@ class Intcode:
     def save(self):  # [3, a]
         self.modes += [0] * (1 - len(self.modes))  # pad to handle leading 0 in instruction
         assert all(self.modes) == 0
+
         _ = self.modes.pop(0)  # not used, but we add and pop for consistency
         v = self.memory[self.pos + 1]
-        self.memory[v] = int(self.input)
+
+        if self.input:
+            if type(self.input) == list:
+                i = self.input.pop(0)
+            else:
+                i = self.input
+            self.memory[v] = int(i)
+        else:
+            self.memory[v] = int(input(f"Insert number to store at position {v}: "))
+
         self.pos += 2
 
 
     def load(self):  # [4, a]
+        self.pos += 1
         self.modes += [0] * (1 - len(self.modes))  # pad to handle leading 0 in instruction
         m = self.modes.pop(0)
-        self.pos += 1
-        print(self.value(m))
+        self.output = self.value(m)
         self.pos += 1
 
 
