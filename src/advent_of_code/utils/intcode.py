@@ -4,12 +4,14 @@ import numpy as np
 
 class Intcode:
 
-    def __init__(self, program, input_=None):
+    def __init__(self, program, init=None):
         self.memory = program
-        self.input = input_
+        self.init = init
         self.output = None
         self.pos = 0
         self.modes = []
+        self.first_run = True
+        self.done = False
 
 
     def modify(self, modifications):
@@ -47,31 +49,32 @@ class Intcode:
 
 
 
-    def save(self):  # [3, a]
+    def save(self, signal=None):  # [3, a]
         self.modes += [0] * (1 - len(self.modes))  # pad to handle leading 0 in instruction
         assert all(self.modes) == 0
 
         _ = self.modes.pop(0)  # not used, but we add and pop for consistency
         v = self.memory[self.pos + 1]
 
-        if self.input:
-            if type(self.input) == list:
-                i = self.input.pop(0)
+        if self.first_run:
+            if self.init is not None:
+                self.memory[v] = int(self.init)
             else:
-                i = self.input
-            self.memory[v] = int(i)
+                self.memory[v] = int(input(f"Insert number to store at position {v}: "))
+            self.first_run = False
         else:
-            self.memory[v] = int(input(f"Insert number to store at position {v}: "))
+            self.memory[v] = signal
 
         self.pos += 2
 
 
     def load(self):  # [4, a]
-        self.pos += 1
+        self.pos += 2
         self.modes += [0] * (1 - len(self.modes))  # pad to handle leading 0 in instruction
         m = self.modes.pop(0)
-        self.output = self.value(m)
-        self.pos += 1
+        self.output = self.memory[self.memory[self.pos-1]]
+#        print(f"Output: {self.output}")
+#        self.pos += 1
 
 
     def jump_t(self):  # [5, a, b]
@@ -152,7 +155,7 @@ class Intcode:
         self.pos += 1
 
 
-    def run(self):
+    def run(self, signal=None):
         """Run the program in memory."""
 
         counter = 0
@@ -165,15 +168,17 @@ class Intcode:
 
                 match opcode:
                     case 99:
-                        return 
+                        self.done = True
+                        return (None, opcode)
                     case 1:
                         self.add_mul(1)
                     case 2:
                         self.add_mul(2)
                     case 3:
-                        self.save()
+                        self.save(signal)
                     case 4:
                         self.load()
+                        return (self.output, opcode)
                     case 5:
                         self.jump_t()
                     case 6:
