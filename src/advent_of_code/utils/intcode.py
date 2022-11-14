@@ -1,11 +1,18 @@
 """An OP Code Module"""
+from collections import defaultdict
 
 import numpy as np
 
 class Intcode:
 
     def __init__(self, program, init=None):
-        self.memory = program
+
+        # initialize memory as a dictionary instead of array
+        # this allows for arbitrary memory access, defaulting to 0
+        self.memory = defaultdict(int)
+        for idx, value in enumerate(program):
+            self.memory[idx] = value
+
         self.init = init
         self.output = None
         self.pos = 0
