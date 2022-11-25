@@ -9,6 +9,7 @@ python = ">=3.10.0,<3.11"
 requests = "^2.26.0"
 networkx = "^2.6.3"
 numpy = "^1.21.4"
+matplotlib = "^3.6.2"
 
 [tool.poetry.dev-dependencies]
 pytest = "^6.2"
