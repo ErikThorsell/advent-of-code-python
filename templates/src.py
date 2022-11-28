@@ -7,10 +7,14 @@ from advent_of_code.utils.fetch import fetch
 from advent_of_code.utils.parse import split_number_by_newline
 
 
+# Guesses for Part 1
+#  99 | Too large
 def solution_1(input):
     pass
 
 
+# Guesses for Part 2
+# 97 | Too small
 def solution_2(input):
     pass
 
