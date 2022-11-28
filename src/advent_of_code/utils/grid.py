@@ -23,6 +23,11 @@ def get_adjacent(x, y, dir):
         ]
 
 
+def print_grid(grid):
+    for row in grid:
+        print("".join(row))
+
+
 def get_cell(grid, ix, iy):
     if iy < 0 or iy >= len(grid):
         return maxsize

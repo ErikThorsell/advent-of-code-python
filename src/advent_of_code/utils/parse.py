@@ -131,6 +131,16 @@ def parse_grid(input: str):
     return grid
 
 
+def parse_grid_str(input: str):
+    rows = split_str_by_newline(input)
+    grid = []
+    for rx, row in enumerate(rows):
+        grid.append([])
+        for _, col in enumerate(row):
+            grid[rx].append(col)
+    return grid
+
+
 def parse_bingo(input: str):
     def parse_bingo_boards(rows):
         str_boards = split_str_by_separator(rows, "\n\n")
