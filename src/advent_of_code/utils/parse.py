@@ -227,3 +227,21 @@ def parse_sea_cucumbers(input: str):
             elif cell == "v":
                 south[(cx, rx)] = cell
     return east, south
+
+
+def parse_crates(input: str):
+    raw_crates, raw_instructions = input.split("\n\n")
+
+    stacks = defaultdict(list)
+    for row in raw_crates.split("\n"):
+        for idx in range(1, len(row), 4):
+            if row[idx].isalpha():
+                crate_idx = (idx // 4) + 1
+                stacks[crate_idx] = [row[idx]] + stacks[crate_idx]
+
+    instructions = list()
+    for row in raw_instructions.split("\n"):
+        q, f, t = list(map(int, re.findall(r"\d+", row)))
+        instructions.append((q, f, t))
+
+    return stacks, instructions
