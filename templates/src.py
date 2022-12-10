@@ -4,7 +4,7 @@ import time
 from sys import maxsize
 
 from advent_of_code.utils.fetch import fetch
-from advent_of_code.utils.parse import split_number_by_newline
+from advent_of_code.utils.parse import split_str_by_newline
 
 
 # Guesses for Part 1
@@ -23,7 +23,7 @@ def run(year: int, day: int):
     print(f"\n🌟 Fetching input for {year}/{day} 🌟")
 
     input = fetch(year, day)
-    parsed_input = split_number_by_newline(input)
+    parsed_input = split_str_by_newline(input)
 
     tic = time.perf_counter()
     s1 = solution_1(copy.deepcopy(parsed_input))
