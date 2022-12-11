@@ -65,7 +65,7 @@ def turn(monkeys, inspections, divisor):
 
             inspections[m] += 1
             monkeys[throw_to]["items"].append(worry_level)
-    
+
     return monkeys, inspections
 
 

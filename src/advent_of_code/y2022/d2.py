@@ -10,7 +10,14 @@ from advent_of_code.utils.parse import split_str_by_newline
 # Guesses for Part 1
 # 10360
 def solution_1(input):
-    trans = {"A": "Rock", "B": "Paper", "C": "Scissors", "X": "Rock", "Y": "Paper", "Z": "Scissors"}
+    trans = {
+        "A": "Rock",
+        "B": "Paper",
+        "C": "Scissors",
+        "X": "Rock",
+        "Y": "Paper",
+        "Z": "Scissors",
+    }
     rules = {"Rock": "Scissors", "Paper": "Rock", "Scissors": "Paper"}
     scores = {"Rock": 1, "Paper": 2, "Scissors": 3}
     score = 0
@@ -32,7 +39,14 @@ def solution_1(input):
 # Guesses for Part 2
 # 6886
 def solution_2(input):
-    trans = {"A": "Rock", "B": "Paper", "C": "Scissors", "X": "Rock", "Y": "Paper", "Z": "Scissors"}
+    trans = {
+        "A": "Rock",
+        "B": "Paper",
+        "C": "Scissors",
+        "X": "Rock",
+        "Y": "Paper",
+        "Z": "Scissors",
+    }
     strategy = {"Y": "Draw", "X": "Lose", "Z": "Win"}
     rules = {"Rock": "Scissors", "Paper": "Rock", "Scissors": "Paper"}
     scores = {"Rock": 1, "Paper": 2, "Scissors": 3}

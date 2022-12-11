@@ -51,7 +51,9 @@ def main() -> None:
             print(f"Running total (execution time): {toc-tic:0.4f}s")
 
         print()
-        print(f"🌟 Solutions for year {args.year} acquired in: {toc-tic:0.4f} seconds! 🌟")
+        print(
+            f"🌟 Solutions for year {args.year} acquired in: {toc-tic:0.4f} seconds! 🌟"
+        )
 
     else:
         _pre_processing(args.year, args.day)

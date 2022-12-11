@@ -60,17 +60,27 @@ def solution_2(input):
 
     for line in input:
         name = line.split()[0]
-        pace, stamina, rest = map(int, re.search(r"(\d+) .* (\d+) .* (\d+)", line).groups())
+        pace, stamina, rest = map(
+            int, re.search(r"(\d+) .* (\d+) .* (\d+)", line).groups()
+        )
         deers[name]["pace"] = pace
         deers[name]["stamina"] = stamina
         deers[name]["rest"] = rest
-        deers[name]["distance"] = pace * (stamina * (T // (stamina + rest)) + min(T % (stamina + rest), stamina))
+        deers[name]["distance"] = pace * (
+            stamina * (T // (stamina + rest)) + min(T % (stamina + rest), stamina)
+        )
         deers[name]["score"] = 0
 
     for t in range(1, T + 1):
         for d in deers:
-            pace, stamina, rest = deers[d]["pace"], deers[d]["stamina"], deers[d]["rest"]
-            deers[d]["distance"] = pace * (stamina * (t // (stamina + rest)) + min(t % (stamina + rest), stamina))
+            pace, stamina, rest = (
+                deers[d]["pace"],
+                deers[d]["stamina"],
+                deers[d]["rest"],
+            )
+            deers[d]["distance"] = pace * (
+                stamina * (t // (stamina + rest)) + min(t % (stamina + rest), stamina)
+            )
 
         d_max = max(deers[d]["distance"] for d in deers)
 

@@ -29,7 +29,9 @@ def solution_2(input):
                     expanded_value = 1
             expanded_grid[rx, cx] = expanded_value
 
-    return dijkstra_grid(expanded_grid, (0, 0), (len(expanded_grid) - 1, len(expanded_grid[0]) - 1))
+    return dijkstra_grid(
+        expanded_grid, (0, 0), (len(expanded_grid) - 1, len(expanded_grid[0]) - 1)
+    )
 
 
 def run(year: int, day: int):

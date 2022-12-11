@@ -17,7 +17,9 @@ def solution_1(grid):
             for cx, _ in enumerate(grid[rx]):
                 light = grid[rx][cx]
 
-                neighbors = [get_cell(grid, n[0], n[1]) for n in get_adjacent(cx, rx, 8)]
+                neighbors = [
+                    get_cell(grid, n[0], n[1]) for n in get_adjacent(cx, rx, 8)
+                ]
                 lit_neighbors = neighbors.count("#")
 
                 if light == "#" and 2 <= lit_neighbors <= 3:
@@ -46,7 +48,9 @@ def solution_2(grid):
                 light = grid[rx][cx]
 
                 # Fix s.t. if neighbour is a corner, it returns #
-                neighbors = [get_cell(grid, n[0], n[1]) for n in get_adjacent(cx, rx, 8)]
+                neighbors = [
+                    get_cell(grid, n[0], n[1]) for n in get_adjacent(cx, rx, 8)
+                ]
                 lit_neighbors = neighbors.count("#")
 
                 if rx == cx == 0:

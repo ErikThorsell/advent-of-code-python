@@ -10,9 +10,16 @@ from advent_of_code.utils.parse import split_number_by_separator
 
 def compute_min_pos_cost(crabs: List[int], natural_method: bool = False):
     def cost(crab, pos: int, natural_method: bool) -> int:
-        return abs(crab - pos) * abs((crab - pos) + 1) // 2 if natural_method else abs(crab - pos)
+        return (
+            abs(crab - pos) * abs((crab - pos) + 1) // 2
+            if natural_method
+            else abs(crab - pos)
+        )
 
-    return min(sum(cost(crab, pos, natural_method) for crab in crabs) for pos in range(min(crabs), max(crabs) + 1))
+    return min(
+        sum(cost(crab, pos, natural_method) for crab in crabs)
+        for pos in range(min(crabs), max(crabs) + 1)
+    )
 
 
 def solution_1(input):

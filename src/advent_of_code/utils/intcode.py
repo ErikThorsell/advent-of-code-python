@@ -3,8 +3,8 @@ from collections import defaultdict
 
 import numpy as np
 
-class Intcode:
 
+class Intcode:
     def __init__(self, program, init=None):
 
         # initialize memory as a dictionary instead of array
@@ -21,11 +21,9 @@ class Intcode:
         self.first_run = True
         self.done = False
 
-
     def modify(self, modifications):
         for (address, value) in modifications.items():
             self.memory[address] = value
-
 
     def value(self, mode):
         if mode == 0:
@@ -37,10 +35,11 @@ class Intcode:
         else:
             raise ValueError(f"Unknown mode: {mode}")
 
-
     def add_mul(self, opcode):  # [1/2, a, b, c]
         """Addition and multiplication only differ by the np.sum() and np.prod()."""
-        self.modes += [0] * (3 - len(self.modes))  # pad to handle leading 0 in instruction
+        self.modes += [0] * (
+            3 - len(self.modes)
+        )  # pad to handle leading 0 in instruction
         self.pos += 1  # increment to get to parameters
 
         params = []
@@ -60,10 +59,10 @@ class Intcode:
 
         self.pos += 1
 
-
-
     def save(self, signal=None):  # [3, a]
-        self.modes += [0] * (1 - len(self.modes))  # pad to handle leading 0 in instruction
+        self.modes += [0] * (
+            1 - len(self.modes)
+        )  # pad to handle leading 0 in instruction
         assert all(self.modes) == 0
 
         _ = self.modes.pop(0)  # not used, but we add and pop for consistency
@@ -80,16 +79,18 @@ class Intcode:
 
         self.pos += 2
 
-
     def load(self):  # [4, a]
         self.pos += 2
-        self.modes += [0] * (1 - len(self.modes))  # pad to handle leading 0 in instruction
+        self.modes += [0] * (
+            1 - len(self.modes)
+        )  # pad to handle leading 0 in instruction
         _ = self.modes.pop(0)
-        self.output = self.memory[self.memory[self.pos-1]]
-
+        self.output = self.memory[self.memory[self.pos - 1]]
 
     def jump_t(self):  # [5, a, b]
-        self.modes += [0] * (2 - len(self.modes))  # pad to handle leading 0 in instruction
+        self.modes += [0] * (
+            2 - len(self.modes)
+        )  # pad to handle leading 0 in instruction
         m = self.modes.pop(0)
 
         self.pos += 1
@@ -101,9 +102,10 @@ class Intcode:
             self.pos += 2
             _ = self.modes.pop(0)
 
-
     def jump_f(self):  # [6, a, b]
-        self.modes += [0] * (2 - len(self.modes))  # pad to handle leading 0 in instruction
+        self.modes += [0] * (
+            2 - len(self.modes)
+        )  # pad to handle leading 0 in instruction
         m = self.modes.pop(0)
 
         self.pos += 1
@@ -115,10 +117,11 @@ class Intcode:
             self.pos += 2
             _ = self.modes.pop(0)
 
-
     def less(self):  # [7, a, b, c]
         self.pos += 1  # increment to get to parameters
-        self.modes += [0] * (3 - len(self.modes))  # pad to handle leading 0 in instruction
+        self.modes += [0] * (
+            3 - len(self.modes)
+        )  # pad to handle leading 0 in instruction
 
         params = []
         for _ in range(2):  # we want the modes for a, b
@@ -129,7 +132,7 @@ class Intcode:
             if m == 1:
                 params.append(v)
             self.pos += 1
-        
+
         m = self.modes.pop(0)
         assert m == 0
 
@@ -140,10 +143,11 @@ class Intcode:
 
         self.pos += 1
 
-
     def eq(self):  # [8, a, b, c]
         self.pos += 1  # increment to get to parameters
-        self.modes += [0] * (3 - len(self.modes))  # pad to handle leading 0 in instruction
+        self.modes += [0] * (
+            3 - len(self.modes)
+        )  # pad to handle leading 0 in instruction
 
         params = []
         for _ in range(2):  # we want the modes for a, b
@@ -154,7 +158,7 @@ class Intcode:
             if m == 1:
                 params.append(v)
             self.pos += 1
-        
+
         m = self.modes.pop(0)
         assert m == 0
 
@@ -165,14 +169,14 @@ class Intcode:
 
         self.pos += 1
 
-    
     def adj_base(self):  # [9, a]
         self.pos += 1
-        self.modes += [0] * (1 - len(self.modes))  # pad to handle leading 0 in instruction
+        self.modes += [0] * (
+            1 - len(self.modes)
+        )  # pad to handle leading 0 in instruction
         m = self.modes.pop(0)
         self.relative_base += self.value(m)
         self.pos += 1
-
 
     def run(self, signal=None):
         """Run the program in memory."""
@@ -210,7 +214,7 @@ class Intcode:
                         self.adj_base()
                     case _:
                         raise ValueError(f"Unknown OP Code: {opcode}")
-            
+
                 assert len(self.modes) == 0  # prev op should have emptied modes
                 counter += 1
                 if counter > 1000:

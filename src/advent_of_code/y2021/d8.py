@@ -35,7 +35,18 @@ def overlap(d1, d2: str) -> int:
 def solution_2(input):
     output_values = 0
     for signal, output in input:
-        digit_to_segments = {0: "", 1: "", 2: "", 3: "", 4: "", 5: "", 6: "", 7: "", 8: "", 9: ""}
+        digit_to_segments = {
+            0: "",
+            1: "",
+            2: "",
+            3: "",
+            4: "",
+            5: "",
+            6: "",
+            7: "",
+            8: "",
+            9: "",
+        }
         while any(digit == "" for digit in digit_to_segments.values()):
             for digit in signal.split():
                 sd = "".join(sorted(digit))

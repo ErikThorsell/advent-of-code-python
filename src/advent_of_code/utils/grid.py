@@ -27,10 +27,10 @@ def get_adjacent(x, y, dir):
 # Left, Right, Up, Down
 def get_rays(grid, y, x):
     return [
-     [grid[y][dx] for dx in range(x)],
-     [grid[y][dx] for dx in range(x+1, len(grid[0]))],
-     [grid[dy][x] for dy in range(y)],
-     [grid[dy][x] for dy in range(y+1, len(grid))]
+        [grid[y][dx] for dx in range(x)],
+        [grid[y][dx] for dx in range(x + 1, len(grid[0]))],
+        [grid[dy][x] for dy in range(y)],
+        [grid[dy][x] for dy in range(y + 1, len(grid))],
     ]
 
 
@@ -38,10 +38,10 @@ def get_rays(grid, y, x):
 # Left, Right, Up, Down
 def get_rays_from_inside(grid, y, x):
     return [
-     [grid[y][dx] for dx in range(x)][::-1],
-     [grid[y][dx] for dx in range(x+1, len(grid[0]))],
-     [grid[dy][x] for dy in range(y)][::-1],
-     [grid[dy][x] for dy in range(y+1, len(grid))]
+        [grid[y][dx] for dx in range(x)][::-1],
+        [grid[y][dx] for dx in range(x + 1, len(grid[0]))],
+        [grid[dy][x] for dy in range(y)][::-1],
+        [grid[dy][x] for dy in range(y + 1, len(grid))],
     ]
 
 

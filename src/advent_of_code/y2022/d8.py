@@ -16,7 +16,7 @@ def solution_1(input):
         for cx, col in enumerate(row):
 
             # All trees on the edge are visible
-            if rx == 0 or cx == 0 or rx == len(input)-1 or cx == len(row)-1:
+            if rx == 0 or cx == 0 or rx == len(input) - 1 or cx == len(row) - 1:
                 visible += 1
                 continue
 
@@ -26,7 +26,7 @@ def solution_1(input):
                 if all(t < col for t in trees):
                     visible += 1
                     break  # doesn't matter if the tree is visible from multiple angles
-    
+
     return visible
 
 
@@ -48,9 +48,9 @@ def solution_2(input):
                         vd += 1  # include the tree that caused us to stop
                         break
                 viewing_distances.append(vd)
-            
+
             max_scenic_score = max(max_scenic_score, prod(viewing_distances))
-    
+
     return max_scenic_score
 
 

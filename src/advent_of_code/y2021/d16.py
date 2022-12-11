@@ -22,4 +22,6 @@ def run(year: int, day: int):
     tic = time.perf_counter()
     s1, s2 = solution(copy.deepcopy(input))
     toc = time.perf_counter()
-    print(f"Solution for problem 1: {s1} and problem 2: {s2}, acquired in: {toc-tic:0.4f} seconds")
+    print(
+        f"Solution for problem 1: {s1} and problem 2: {s2}, acquired in: {toc-tic:0.4f} seconds"
+    )

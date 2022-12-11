@@ -14,7 +14,10 @@ def valid_password(password):
         return False
 
     # Must contain straight
-    if not any(ord(t[1]) - ord(t[0]) == 1 and ord(t[2]) - ord(t[1]) == 1 for t in sliding_window(password, 3)):
+    if not any(
+        ord(t[1]) - ord(t[0]) == 1 and ord(t[2]) - ord(t[1]) == 1
+        for t in sliding_window(password, 3)
+    ):
         return False
 
     # Must contain pair

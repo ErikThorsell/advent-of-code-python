@@ -14,15 +14,20 @@ def parse(input):
 
     for line in input:
         match line.split():
-            case "$", "cd", "/": current_directory = [""]
-            case "$", "cd", "..": current_directory.pop()
-            case "$", "cd", directory: current_directory.append(directory)
-            case "$", "ls": pass
-            case "dir", size: pass
+            case "$", "cd", "/":
+                current_directory = [""]
+            case "$", "cd", "..":
+                current_directory.pop()
+            case "$", "cd", directory:
+                current_directory.append(directory)
+            case "$", "ls":
+                pass
+            case "dir", size:
+                pass
             case size, file:
                 for p_sum in accumulate(current_directory):
                     dirs[p_sum] += int(size)
-    
+
     return dirs
 
 
@@ -44,9 +49,8 @@ def solution_2(input):
     for s in dirs.values():
         if s >= dirs[""] - 40000000:
             min_dir = min(min_dir, s)
-    
-    return min_dir
 
+    return min_dir
 
 
 def run(year: int, day: int):

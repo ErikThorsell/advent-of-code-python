@@ -40,7 +40,10 @@ def run(year: int, day: int):
     input = fetch(year, day)
     parsed_input = split_str_by_newline(input)
     rpc = 18  # input cycles every 18th row
-    constants = [(int(parsed_input[c * rpc + 5][6:]), int(parsed_input[c * rpc + 15][6:])) for c in range(14)]
+    constants = [
+        (int(parsed_input[c * rpc + 5][6:]), int(parsed_input[c * rpc + 15][6:]))
+        for c in range(14)
+    ]
 
     tic = time.perf_counter()
     s1 = solution_1(constants)

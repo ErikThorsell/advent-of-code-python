@@ -27,25 +27,45 @@ def compute(ingr, cal_lim=None):
             for k in range(101 - i - j):
                 l = 100 - i - j - k
                 capacity = (
-                    ingr["Frosting"][0] * i + ingr["Candy"][0] * j + ingr["Butterscotch"][0] * k + ingr["Sugar"][0] * l
+                    ingr["Frosting"][0] * i
+                    + ingr["Candy"][0] * j
+                    + ingr["Butterscotch"][0] * k
+                    + ingr["Sugar"][0] * l
                 )
                 durability = (
-                    ingr["Frosting"][1] * i + ingr["Candy"][1] * j + ingr["Butterscotch"][1] * k + ingr["Sugar"][1] * l
+                    ingr["Frosting"][1] * i
+                    + ingr["Candy"][1] * j
+                    + ingr["Butterscotch"][1] * k
+                    + ingr["Sugar"][1] * l
                 )
                 flavor = (
-                    ingr["Frosting"][2] * i + ingr["Candy"][2] * j + ingr["Butterscotch"][2] * k + ingr["Sugar"][2] * l
+                    ingr["Frosting"][2] * i
+                    + ingr["Candy"][2] * j
+                    + ingr["Butterscotch"][2] * k
+                    + ingr["Sugar"][2] * l
                 )
                 texture = (
-                    ingr["Frosting"][3] * i + ingr["Candy"][3] * j + ingr["Butterscotch"][3] * k + ingr["Sugar"][3] * l
+                    ingr["Frosting"][3] * i
+                    + ingr["Candy"][3] * j
+                    + ingr["Butterscotch"][3] * k
+                    + ingr["Sugar"][3] * l
                 )
                 calories = (
-                    ingr["Frosting"][4] * i + ingr["Candy"][4] * j + ingr["Butterscotch"][4] * k + ingr["Sugar"][4] * l
+                    ingr["Frosting"][4] * i
+                    + ingr["Candy"][4] * j
+                    + ingr["Butterscotch"][4] * k
+                    + ingr["Sugar"][4] * l
                 )
 
                 if cal_lim and calories > cal_lim:
                     continue
 
-                score = max(0, capacity) * max(0, durability) * max(0, flavor) * max(0, texture)
+                score = (
+                    max(0, capacity)
+                    * max(0, durability)
+                    * max(0, flavor)
+                    * max(0, texture)
+                )
                 if score > max_score:
                     max_score = score
 

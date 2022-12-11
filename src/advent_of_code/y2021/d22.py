@@ -28,23 +28,36 @@ def subtract_overlap(ca, cb):
     def overlap(ca, cb):
         (x0a, x1a), (y0a, y1a), (z0a, z1a) = ca
         (x0b, x1b), (y0b, y1b), (z0b, z1b) = cb
-        return x0b <= x1a and x1b >= x0a and y0b <= y1a and y1b >= y0a and z0b <= z1a and z1b >= z0a
+        return (
+            x0b <= x1a
+            and x1b >= x0a
+            and y0b <= y1a
+            and y1b >= y0a
+            and z0b <= z1a
+            and z1b >= z0a
+        )
 
     if overlap(ca, cb):
         (x0a, x1a), (y0a, y1a), (z0a, z1a) = ca
         (x0b, x1b), (y0b, y1b), (z0b, z1b) = cb
 
-        x_overlap = list(zip((x0a, max(x0a, x0b), x1b + 1), (x0b - 1, min(x1a, x1b), x1a)))
+        x_overlap = list(
+            zip((x0a, max(x0a, x0b), x1b + 1), (x0b - 1, min(x1a, x1b), x1a))
+        )
         for xi, (x0, x1) in enumerate(x_overlap):
             if x0 > x1:
                 continue
 
-            y_overlap = list(zip((y0a, max(y0a, y0b), y1b + 1), (y0b - 1, min(y1a, y1b), y1a)))
+            y_overlap = list(
+                zip((y0a, max(y0a, y0b), y1b + 1), (y0b - 1, min(y1a, y1b), y1a))
+            )
             for yi, (y0, y1) in enumerate(y_overlap):
                 if y0 > y1:
                     continue
 
-                z_overlap = list(zip((z0a, max(z0a, z0b), z1b + 1), (z0b - 1, min(z1a, z1b), z1a)))
+                z_overlap = list(
+                    zip((z0a, max(z0a, z0b), z1b + 1), (z0b - 1, min(z1a, z1b), z1a))
+                )
                 for zi, (z0, z1) in enumerate(z_overlap):
                     if z0 > z1:
                         continue

@@ -31,7 +31,9 @@ def solution_1(scanners_to_check):
             for beacon in beacons:
                 for candidate_beacon in candidate_beacons:
                     candidate_beacon = rotate_3d(candidate_beacon, rot_num)
-                    candidate_scanner_positions[tuple(map(operator.sub, beacon, candidate_beacon))] += 1
+                    candidate_scanner_positions[
+                        tuple(map(operator.sub, beacon, candidate_beacon))
+                    ] += 1
 
             # If we find that 12 or more known beacons and candidate beacons yield the same csp we have a match.
             # We add the (now confirmed) scanner to our list of scanners and (after changing the rotation and offset)

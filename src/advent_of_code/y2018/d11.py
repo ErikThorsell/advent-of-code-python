@@ -17,7 +17,9 @@ def compute_power_level_for_fuel_cell(x, y, grid_serial_number: int) -> int:
     return power_level - 5
 
 
-def compute_total_power(x, y, grid_serial_number: int, rectangle_dimensions: Tuple[int, int]) -> int:
+def compute_total_power(
+    x, y, grid_serial_number: int, rectangle_dimensions: Tuple[int, int]
+) -> int:
     total_power = 0
     for ix in range(x, x + rectangle_dimensions[0]):
         for iy in range(y, y + rectangle_dimensions[1]):
@@ -30,7 +32,9 @@ def solution_1(grid_serial_number: int) -> Tuple[int, int]:
     best_coordinate = (-1, -1)
     for x in range(1, 301):
         for y in range(1, 301):
-            if (power := compute_total_power(x, y, grid_serial_number, (3, 3))) > highest_power:
+            if (
+                power := compute_total_power(x, y, grid_serial_number, (3, 3))
+            ) > highest_power:
                 highest_power = power
                 best_coordinate = (x, y)
     return best_coordinate
@@ -46,13 +50,20 @@ def solution_2(grid_serial_number: int) -> Tuple[int, int]:
     # Partial sums
     for x in range(1, 301):
         for y in range(1, 301):
-            grid[x][y] = grid[x][y] + grid[x - 1][y] + grid[x][y - 1] - grid[x - 1][y - 1]
+            grid[x][y] = (
+                grid[x][y] + grid[x - 1][y] + grid[x][y - 1] - grid[x - 1][y - 1]
+            )
 
     ans = (0, (0, 0, 0))
     for blk in range(1, 300):
         for x in range(1, 300 - blk + 1):
             for y in range(1, 300 - blk + 1):
-                tot = grid[x + blk][y + blk] - grid[x][y + blk] - grid[x + blk][y] + grid[x][y]
+                tot = (
+                    grid[x + blk][y + blk]
+                    - grid[x][y + blk]
+                    - grid[x + blk][y]
+                    + grid[x][y]
+                )
 
                 ans = max(ans, (tot, (x + 1, y + 1, blk)))
 

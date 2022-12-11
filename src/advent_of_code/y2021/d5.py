@@ -9,7 +9,9 @@ from advent_of_code.utils.fetch import fetch
 from advent_of_code.utils.parse import parse_line_segments
 
 
-def compute_coverage(line_segments: List[Tuple[int, int]]) -> Dict[Tuple[int, int], int]:
+def compute_coverage(
+    line_segments: List[Tuple[int, int]]
+) -> Dict[Tuple[int, int], int]:
     coverage = dict()
     for line in line_segments:
         for c in get_coordinates_between(line[0], line[1]):

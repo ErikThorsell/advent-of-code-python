@@ -16,22 +16,22 @@ def move_tail(head, tp):
     y_dist = abs(head[1] - tp[1])
 
     if x_dist > 0 and y_dist > 0:
-        dx = int((head[0]-tp[0])/x_dist)
-        dy = int((head[1]-tp[1])/y_dist)
+        dx = int((head[0] - tp[0]) / x_dist)
+        dy = int((head[1] - tp[1]) / y_dist)
 
     elif x_dist > 0:
-        dx = int((head[0]-tp[0])/x_dist)
+        dx = int((head[0] - tp[0]) / x_dist)
 
     else:
-        dy = int((head[1]-tp[1])/y_dist)
+        dy = int((head[1] - tp[1]) / y_dist)
 
-    return (tp[0]+dx, tp[1]+dy)
+    return (tp[0] + dx, tp[1] + dy)
 
 
 def tail_caught_up(head, tp):
     if get_manhattan_distance(head, tp) <= 1:
         return True
-    if abs(head[0]-tp[0]) == abs(head[1]-tp[1]) == 1:
+    if abs(head[0] - tp[0]) == abs(head[1] - tp[1]) == 1:
         return True
     return False
 
@@ -42,24 +42,24 @@ def move_knots(instruction, knots, visited):
 
     # Move Head
     for _ in range(int(n)):
-        match d :
+        match d:
             case "U":
-                head = (head[0], head[1]+1)
+                head = (head[0], head[1] + 1)
             case "R":
-                head = (head[0]+1, head[1])
+                head = (head[0] + 1, head[1])
             case "D":
-                head = (head[0], head[1]-1)
+                head = (head[0], head[1] - 1)
             case "L":
-                head = (head[0]-1, head[1])
+                head = (head[0] - 1, head[1])
 
         knots[0] = head
-    
+
         # Follow with remaining knots
         for idx, _ in enumerate(knots[1:]):
-            if not tail_caught_up(knots[idx], knots[idx+1]):
-                knots[idx+1] = move_tail(knots[idx], knots[idx+1])
+            if not tail_caught_up(knots[idx], knots[idx + 1]):
+                knots[idx + 1] = move_tail(knots[idx], knots[idx + 1])
                 visited.add(knots[-1])  # we're only interested in the last knot
-        
+
     return knots, visited
 
 
@@ -73,11 +73,11 @@ def solution_1(input):
         knots, visited = move_knots(instr, knots, visited)
 
     return len(visited)
-        
+
 
 def solution_2(input):
 
-    knots = [(0, 0)]*10
+    knots = [(0, 0)] * 10
     visited = set()
     visited.add(knots[-1])
 
