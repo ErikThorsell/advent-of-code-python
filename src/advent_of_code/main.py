@@ -34,16 +34,6 @@ def _pre_processing(year: int, day: int):
         copyfile("templates/src.py", solution_path)
         print(f"A solution template has been created in: {solution_path}")
 
-    test_dir_path = Path(f"tests/y{year}")
-    test_path = Path(f"tests/y{year}/test_{year}_d{day}.py")
-    if not test_dir_path.exists():
-        test_dir_path.mkdir(parents=True)
-
-    if not test_path.exists():
-        copyfile("templates/test.py", test_path)
-        print(f"A test template has been created in: {test_path}")
-        print("⚠️ YOU NEED TO MODIFY THE IMPORTS IN THE TEST FILE! ⚠️")
-
 
 def main() -> None:
     args = _parse_args()
