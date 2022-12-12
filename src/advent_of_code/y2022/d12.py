@@ -1,5 +1,4 @@
 """Solution module for Day 12, 2022"""
-from collections import deque
 import copy
 from heapq import heapify, heappop, heappush
 import time
@@ -41,6 +40,8 @@ def inbound(grid, r, c):
 
 
 def path_dijkstra(grid, sr, sc, er, ec):
+    def heuristic(grid, nr, cr, r, c):
+        return inbound(grid, nr, cr) and grid[nr][cr] - grid[r][c] <= 1
 
     distances = {}
     distances[(sr, sc)] = 0
@@ -59,7 +60,7 @@ def path_dijkstra(grid, sr, sc, er, ec):
             return dist
 
         for (nr, nc) in get_adjacent(r, c, 4):
-            if inbound(grid, nr, nc) and grid[nr][nc] - grid[r][c] <= 1:
+            if heuristic(grid, nr, nc, r, c):
                 n_dist = dist + 1
                 if distances[(nr, nc)] <= n_dist:
                     continue
@@ -74,10 +75,10 @@ def path(grid, sr, sc, er, ec):
     steps = [[maxsize] * cols for _ in range(rows)]
     steps[sr][sc] = 0
 
-    Q = deque([(sr, sc)])
+    Q = [(sr, sc)]
 
     while Q:
-        r, c = Q.popleft()
+        (r, c), Q = Q[0], Q[1:]
         for nr, nc in get_adjacent(r, c, 4):
             if inbound(grid, nr, nc) and steps[nr][nc] == maxsize and grid[nr][nc] - grid[r][c] <= 1:
                 steps[nr][nc] = steps[r][c] + 1
