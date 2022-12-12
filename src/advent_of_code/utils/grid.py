@@ -59,6 +59,7 @@ def get_cell(grid, ix, iy):
 
 
 def dijkstra_grid(grid, start, goal):
+
     heap = [(0, start)]
     heapify(heap)
     distances = {}
