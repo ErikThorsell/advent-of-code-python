@@ -11,21 +11,15 @@ def get_min_max_velocity(velocities: List[Tuple[int, int]]) -> Tuple[int, int]:
     return min_x, max_x, min_y, max_y
 
 
-def get_rectangle_in_grid(
-    top_left_coordinate, width_and_height: Tuple[int, int]
-) -> List[Tuple[int, int]]:
+def get_rectangle_in_grid(top_left_coordinate, width_and_height: Tuple[int, int]) -> List[Tuple[int, int]]:
     pass
 
 
-def get_coordinates(
-    vectors: List[Tuple[Tuple[int, int], Tuple[int, int]]]
-) -> List[Tuple[int, int]]:
+def get_coordinates(vectors: List[Tuple[Tuple[int, int], Tuple[int, int]]]) -> List[Tuple[int, int]]:
     return [p for (p, v) in vectors]
 
 
-def get_velocities(
-    vectors: List[Tuple[Tuple[int, int], Tuple[int, int]]]
-) -> List[Tuple[int, int]]:
+def get_velocities(vectors: List[Tuple[Tuple[int, int], Tuple[int, int]]]) -> List[Tuple[int, int]]:
     return [v for (p, v) in vectors]
 
 
@@ -38,23 +32,14 @@ def line_is_diagonal(c1, c2: Tuple[int, int]) -> bool:
 def _get_coordinates_between_hor_ver(c1, c2: Tuple[int, int]) -> List[Tuple[int, int]]:
     dx = 1 if c2[0] >= c1[0] else -1
     dy = 1 if c2[1] >= c1[1] else -1
-    return [
-        (x, y)
-        for x in range(c1[0], c2[0] + dx, dx)
-        for y in range(c1[1], c2[1] + dy, dy)
-    ]
+    return [(x, y) for x in range(c1[0], c2[0] + dx, dx) for y in range(c1[1], c2[1] + dy, dy)]
 
 
 def get_coordinates_between(c1, c2: Tuple[int, int]) -> List[Tuple[int, int]]:
     if line_is_diagonal(c1, c2):
         dx = 1 if c2[0] >= c1[0] else -1
         dy = 1 if c2[1] >= c1[1] else -1
-        return [
-            (x + dx, y + dy)
-            for (x, y) in zip(
-                range(c1[0] - dx, c2[0], dx), range(c1[1] - dy, c2[1], dy)
-            )
-        ]
+        return [(x + dx, y + dy) for (x, y) in zip(range(c1[0] - dx, c2[0], dx), range(c1[1] - dy, c2[1], dy))]
     return _get_coordinates_between_hor_ver(c1, c2)
 
 
@@ -73,9 +58,7 @@ def move_coordinates(
     return new_coordinates
 
 
-def get_grid_dimensions(
-    coordinates: List[Tuple[int, int]], verbose=False
-) -> Tuple[int, int]:
+def get_grid_dimensions(coordinates: List[Tuple[int, int]], verbose=False) -> Tuple[int, int]:
     x_min = min(coordinates, key=itemgetter(0))[0]
     y_min = min(coordinates, key=itemgetter(1))[1]
     x_max = max(coordinates, key=itemgetter(0))[0]
@@ -101,22 +84,22 @@ def draw_coordinates(coordinates: List[Tuple[int, int]]) -> None:
     print()
 
 
-def draw_dict(dictionary):
+def draw_coordinates_dict(dictionary):
     x_min = min(dictionary.keys(), key=itemgetter(0))[0]
     y_min = min(dictionary.keys(), key=itemgetter(1))[1]
     x_max = max(dictionary.keys(), key=itemgetter(0))[0]
     y_max = max(dictionary.keys(), key=itemgetter(1))[1]
     for y in range(y_min, y_max + 1):
         for x in range(x_min, x_max + 1):
-            print(dictionary[(x, y)], end="")
+            if (x, y) in dictionary:
+                print(dictionary[(x, y)], end="")
+            else:
+                print(".", end="")
         print()
     print()
-    print()
 
 
-def fold_grid(
-    coordinates: List[Tuple[int, int]], instruction: str
-) -> List[Tuple[int, int]]:
+def fold_grid(coordinates: List[Tuple[int, int]], instruction: str) -> List[Tuple[int, int]]:
     instruction = instruction.split()[-1]
     direction, coordinate = instruction.split("=")
     coordinate = int(coordinate)
