@@ -1,4 +1,4 @@
-from typing import Tuple
+from typing import List, Tuple
 
 
 def get_manhattan_distance(x, y: Tuple[int, int]) -> int:
