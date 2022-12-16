@@ -1,5 +1,6 @@
 """A very nice main module!"""
 import argparse
+from datetime import datetime
 import importlib
 from pathlib import Path
 import time
@@ -38,7 +39,17 @@ def _pre_processing(year: int, day: int):
 def main() -> None:
     args = _parse_args()
 
-    if not args.day:
+    print()
+    if not (args.day or args.year):
+        today = datetime.now()
+        print(f"No year nor day specified, presuming today's puzzle: Day: {today.day}, Year: {today.year}")
+
+        _pre_processing(today.year, today.day)
+        runner_str = f"advent_of_code.y{today.year}.d{today.day}"
+        runner = importlib.import_module(runner_str)
+        runner.run(today.year, today.day)
+
+    elif not args.day:
         python_files = list(Path(f"src/advent_of_code/y{args.year}").glob("*.py"))
         python_files = sorted([int(pf.stem.replace("d", "")) for pf in python_files])
 
@@ -51,9 +62,7 @@ def main() -> None:
             print(f"Running total (execution time): {toc-tic:0.4f}s")
 
         print()
-        print(
-            f"🌟 Solutions for year {args.year} acquired in: {toc-tic:0.4f} seconds! 🌟"
-        )
+        print(f"🌟 Solutions for year {args.year} acquired in: {toc-tic:0.4f} seconds! 🌟")
 
     else:
         _pre_processing(args.year, args.day)
