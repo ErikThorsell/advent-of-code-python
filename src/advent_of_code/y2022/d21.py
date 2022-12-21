@@ -1,13 +1,16 @@
 """Solution module for Day 21, 2022"""
 import copy
+import re
 import time
 from sys import maxsize
+
+import z3
 
 from advent_of_code.utils.fetch import fetch
 from advent_of_code.utils.parse import split_str_by_newline
 
 
-def parse(lines, pt=1):
+def parse(lines):
     monkeys = dict()
 
     for line in lines:
@@ -17,97 +20,60 @@ def parse(lines, pt=1):
         operation = operation.strip()
 
         if operation.isnumeric():
-            monkeys[monkey] = (True, int(operation))
+            monkeys[monkey] = int(operation)
 
         else:
             l, op, r = operation.split()
-            if monkey == "root" and pt == 2:
-                op = "=="
-            monkeys[monkey] = (False, l, r, op)
+            monkeys[monkey] = (l, r, op)
 
     return monkeys
 
 
-# Guesses for Part 1
-#  99 | Too large
 def solution_1(input):
     monkeys = parse(input)
 
-    while not all(m[0] for m in monkeys.values()):
+    while not isinstance(monkeys["root"], int):
 
-        for monkey, operation in monkeys.items():
+        for monkey, value in monkeys.items():
 
-            if operation[0]:
+            if isinstance(value, int):
                 continue
 
-            left = operation[1]
-            right = operation[2]
+            left = value[0]
+            right = value[1]
 
-            if monkeys[left][0] and monkeys[right][0]:
-                expr = f"{monkeys[left][1]} {operation[3]} {monkeys[right][1]}"
+            if isinstance(monkeys[left], int) and isinstance(monkeys[right], int):
+                expr = f"{monkeys[left]} {value[2]} {monkeys[right]}"
                 ans = eval(expr)
-                monkeys[monkey] = (True, ans)
+                monkeys[monkey] = int(ans)
 
-    return monkeys["root"][1]
+    return monkeys["root"]
 
 
-# Guesses for Part 2
-# 97 | Too small
 def solution_2(input):
 
-    humn_num = 0
+    s = z3.Optimize()
 
-    while True:
-        monkeys = parse(input, 2)
-        monkeys["humn"] = (True, humn_num)
+    for line in input:
+        for m in re.findall(r"[a-z]{4}", line):
+            exec(f'{m} = z3.Int("{m}")')
 
-        while not all(m[0] for m in monkeys.values()):
+        if line[:4] == "humn":
+            continue
 
-            for monkey, operation in monkeys.items():
+        if line[:4] == "root":
+            line = line[6:].replace("+", "==")
 
-                if operation[0]:
-                    continue
+        exec(f's.add({line.replace(":", "==")})')
 
-                left = operation[1]
-                right = operation[2]
-
-                if monkeys[left][0] and monkeys[right][0]:
-
-                    if monkey == "root":
-                        diff = monkeys[left][1] - monkeys[right][1]
-
-                    expr = f"{monkeys[left][1]} {operation[3]} {monkeys[right][1]}"
-                    ans = eval(expr)
-                    monkeys[monkey] = (True, ans)
-
-        if monkeys["root"][1]:
-            return monkeys["humn"][1]
-
-        if abs(diff) > 10000:
-            humn_num += diff
-        else:
-            humn_num += 1
+    s.check()
+    return s.model()[z3.Int("humn")]
 
 
 def run(year: int, day: int):
     print(f"\n🌟 Fetching input for {year}/{day} 🌟")
 
     input = fetch(year, day)
-    #    input = """root: pppw + sjmn
-    # dbpl: 5
-    # cczh: sllz + lgvd
-    # zczc: 2
-    # ptdq: humn - dvpt
-    # dvpt: 3
-    # lfqf: 4
-    # humn: 5
-    # ljgn: 2
-    # sjmn: drzm * dbpl
-    # sllz: 4
-    # pppw: cczh / lfqf
-    # lgvd: ljgn * ptdq
-    # drzm: hmdt - zczc
-    # hmdt: 32"""
     parsed_input = split_str_by_newline(input)
 
     tic = time.perf_counter()
