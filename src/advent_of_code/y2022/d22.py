@@ -17,19 +17,19 @@ def parse_map(raw_map):
     """Convert the list of strings into a coordinate dict."""
     map = {}
 
-    y = 0
-    x = 0
+    y = 1
+    x = 1
 
     for c in raw_map:
         if c == "\n":
             y += 1
-            x = 0
+            x = 1
             continue
-        else:
-            x += 1
 
         if c != " ":
             map[(x, y)] = c
+
+        x += 1
 
     return map
 
@@ -85,13 +85,14 @@ def get_limits(map, pos):
 def move(map, pos, moves, direction, dist):
     """Move dist steps in current direction, from pos, on map."""
 
-    print(f"Taking {dist} steps {DIR[direction]}")
+#    print(f"Taking {dist} steps {DIR[direction]}")
 
     directions = [(0, 1), (1, 0), (0, -1), (-1, 0)]
     x_min, x_max, y_min, y_max = get_limits(map, pos)
 
     x, y = pos
     for _ in range(dist):
+        moves[(x, y)] = direction
         nx, ny = x+directions[direction][1], y+directions[direction][0]
 
         # Wrap around
@@ -106,14 +107,12 @@ def move(map, pos, moves, direction, dist):
         
         # Check for wall
         if map[(nx, ny)] == "#":
-            print(f"({nx}, {ny}) is a wall!")
-            moves[(x, y)] = direction
+#            print(f"({nx}, {ny}) is a wall!")
             break
 
-        moves[(x, y)] = direction
         x, y = nx, ny
     
-    print(f"Stopped at ({x}, {y}), facing {DIR[direction]}")
+#    print(f"Stopped at ({x}, {y}), facing {DIR[direction]}")
     return (x, y), moves
 
 
@@ -127,7 +126,6 @@ def turn(direction, turn):
 
 
 # Guesses for Part 1
-#  99 | Too large
 def solution_1(input):
     raw_map = input[0]
     raw_instr = input[1]
@@ -135,25 +133,25 @@ def solution_1(input):
 
     sx, sy = find_start(map)
     instr = parse_instr(raw_instr)
-    draw_map(map)
+#    draw_map(map)
 
     direction = 0  # E S W N = 0 1 2 3
     pos = (sx, sy)
     moves = {}
 
-    print(f"Start position: {pos}")
+#    print(f"Start position: {pos}")
 
     for i in instr:
-        print("---------------------------------")
+#        print("---------------------------------")
         if i.isdigit():
             pos, moves = move(map, pos, moves, direction, int(i))
-            draw_map(map, moves)
+#            draw_map(map, moves)
         else:
-            print(f"Rotating {i}")
+#            print(f"Rotating {i}")
             direction = turn(direction, i)
-            print(f"New direction: {DIR[direction]}")
+#            print(f"New direction: {DIR[direction]}")
 
-    print(f"Final position: {pos} and direction: {direction}")
+#    print(f"Final position: {pos} and direction: {direction}")
     
     return 1000 * pos[1] + 4 * pos[0] + direction
 
@@ -169,20 +167,20 @@ def run(year: int, day: int):
 
     input = fetch(year, day)
 
-    input = """        ...#
-        .#..
-        #...
-        ....
-...#.......#
-........#...
-..#....#....
-..........#.
-        ...#....
-        .....#..
-        .#......
-        ......#.
-
-10R5L5R10L4R5L5"""
+#    input = """        ...#
+#        .#..
+#        #...
+#        ....
+#...#.......#
+#........#...
+#..#....#....
+#..........#.
+#        ...#....
+#        .....#..
+#        .#......
+#        ......#.
+#
+#10R5L5R10L4R5L5"""
 
     parsed_input = input.split("\n\n")
 
