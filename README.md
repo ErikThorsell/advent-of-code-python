@@ -12,6 +12,7 @@ You can find the template [HERE][py-template].
 
 ```
 $> poetry install
+$> pip install setup_tools   # <-- needed for z3-solver
 $> advent_of_code --year $year --day $day
 ```
 

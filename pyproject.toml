@@ -5,24 +5,30 @@ description = "A Python project with solutions to Advent of Code Challenges"
 authors = ["Erik Thorsell <erik@thorsell.io>"]
 
 [tool.poetry.dependencies]
-python = ">=3.10.0,<3.11"
-requests = "^2.26.0"
-networkx = "^2.6.3"
-numpy = "^1.21.4"
-matplotlib = "^3.6.2"
-z3-solver = "^4.11.2.0"
+python = ">=3.12.0"
+numpy = "^1.26.2"
+requests = "^2.31.0"
+networkx = "^3.2.1"
+matplotlib = "^3.8.2"
+z3-solver = "^4.12.2.0"
 
 [tool.poetry.dev-dependencies]
-pytest = "^6.2"
-black = "^21.4b2"
-flake8 = "^3.9.1"
 
 [tool.poetry.scripts]
 advent_of_code = "advent_of_code.main:main"
 
+[tool.poetry.group.dev.dependencies]
+pytest = "^7.4.3"
+black = "^23.11.0"
+flake8 = "^6.1.0"
+
 [tool.pytest.ini_options]
 testpaths = [
     "tests/y2019",
+    "tests/y2020",
+    "tests/y2021",
+    "tests/y2022",
+    "tests/y2023",
 ]
 
 [build-system]
