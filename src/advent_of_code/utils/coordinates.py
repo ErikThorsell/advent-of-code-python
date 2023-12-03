@@ -84,7 +84,7 @@ def draw_coordinates(coordinates: List[Tuple[int, int]]) -> None:
     print()
 
 
-def draw_coordinates_dict(dictionary):
+def draw_coordinates_dict(dictionary, empty="."):
     x_min = min(dictionary.keys(), key=itemgetter(0))[0]
     y_min = min(dictionary.keys(), key=itemgetter(1))[1]
     x_max = max(dictionary.keys(), key=itemgetter(0))[0]
@@ -94,7 +94,7 @@ def draw_coordinates_dict(dictionary):
             if (x, y) in dictionary:
                 print(dictionary[(x, y)], end="")
             else:
-                print(".", end="")
+                print(empty, end="")
         print()
     print()
 
