@@ -12,14 +12,14 @@ def parse(input):
     games = {}
 
     for game in input:
-        game_id, unparsed_rounds = game.split(':')
+        game_id, unparsed_rounds = game.split(":")
         game_id = int(game_id.split()[-1].strip())
 
         parsed_rounds = []
 
-        for round in unparsed_rounds.split(';'):
+        for round in unparsed_rounds.split(";"):
             colour_dict = defaultdict(int)
-            colours = round.strip().split(',')
+            colours = round.strip().split(",")
 
             for colour in colours:
                 count, colour_name = colour.strip().split()
@@ -27,17 +27,13 @@ def parse(input):
 
             parsed_rounds.append(colour_dict)
 
-        games[game_id] = parsed_rounds 
+        games[game_id] = parsed_rounds
 
     return games
 
 
 def solution_1(input):
-    available = {
-        "red": 12,
-        "green": 13,
-        "blue": 14
-    }
+    available = {"red": 12, "green": 13, "blue": 14}
 
     games = parse(input)
 
@@ -51,29 +47,23 @@ def solution_1(input):
 
         if valid:
             sum += game_id
-    
+
     return sum
 
 
 def solution_2(input):
-
     games = parse(input)
 
     sum = 0
     for game in games:
-
-        min_colour = {
-            "red": 0,
-            "green": 0,
-            "blue": 0
-        }
+        min_colour = {"red": 0, "green": 0, "blue": 0}
 
         for round in games[game]:
             for colour in round:
                 min_colour[colour] = max(round[colour], min_colour[colour])
 
         sum += prod(min_colour.values())
-    
+
     return sum
 
 

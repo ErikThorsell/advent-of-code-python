@@ -7,7 +7,6 @@ from advent_of_code.utils.parse import split_str_by_newline
 
 
 def solution_1(input):
-
     score = 0
 
     for line in input:
@@ -23,25 +22,23 @@ def solution_1(input):
         for card in owned:
             if card in winning:
                 winners.append(card)
-        
+
         if len(winners) == 1:
             sub_score += 1
         elif len(winners) > 1:
             sub_score += 1
-            for _ in range(len(winners)-1):
+            for _ in range(len(winners) - 1):
                 sub_score *= 2
-        
+
         score += sub_score
-    
+
     return score
 
 
 def solution_2(input):
-
     copies = {}
 
     for line in input:
-
         id, cards = line.split(":")
         id = int(id.split()[-1].strip())
 
@@ -50,16 +47,15 @@ def solution_2(input):
         owned = [int(o.strip()) for o in owned.split()]
 
         copies[id] = {"winning": winning, "owned": owned, "copies": 1}
-    
+
     for id in copies:
         winners = 0
         for card in copies[id]["owned"]:
             if card in copies[id]["winning"]:
                 winners += 1
-                copies[id+winners]["copies"] += copies[id]["copies"]
-    
+                copies[id + winners]["copies"] += copies[id]["copies"]
+
     return sum([c["copies"] for c in copies.values()])
-        
 
 
 def run(year: int, day: int):

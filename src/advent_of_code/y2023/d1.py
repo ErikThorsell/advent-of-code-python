@@ -10,7 +10,7 @@ def solution_1(input):
     sum = 0
     for l in input:
         ints = [char for char in l if char.isdigit()]
-        sum += int(''.join([ints[0],ints[-1]]))
+        sum += int("".join([ints[0], ints[-1]]))
     return sum
 
 
@@ -33,7 +33,7 @@ def solution_2(input):
         "six": 6,
         "seven": 7,
         "eight": 8,
-        "nine": 9
+        "nine": 9,
     }
 
     sum = 0
@@ -44,8 +44,7 @@ def solution_2(input):
         # Find digit from front
         f_idx = 0
         while f_digit is None:
-
-            p_str = line[:f_idx + 1]
+            p_str = line[: f_idx + 1]
 
             for digit in digits.keys():
                 if digit in p_str:
@@ -53,19 +52,18 @@ def solution_2(input):
 
             f_idx += 1
 
-
         # Find digit from back
         b_idx = 0
         while b_digit is None:
-            p_str = line[len(line) - 1 - b_idx:]
+            p_str = line[len(line) - 1 - b_idx :]
 
             for digit in digits.keys():
                 if digit in p_str:
                     b_digit = digits[digit]
-            
+
             b_idx += 1
-            
-#        print(f"Line: {line} -- found digits {f_digit} and {b_digit} == {f_digit}{b_digit}")
+
+        # print(f"Line: {line} -- found digits {f_digit} and {b_digit} == {f_digit}{b_digit}")
         num = f"{f_digit}{b_digit}"
         sum += int(num)
 
