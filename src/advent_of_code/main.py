@@ -39,9 +39,10 @@ def _pre_processing(year: int, day: int):
 def main() -> None:
     args = _parse_args()
 
+    today = datetime.now()
+
     print()
     if not (args.day or args.year):
-        today = datetime.now()
         print(f"No year nor day specified, presuming today's puzzle: Day: {today.day}, Year: {today.year}")
 
         _pre_processing(today.year, today.day)
@@ -63,6 +64,14 @@ def main() -> None:
 
         print()
         print(f"🌟 Solutions for year {args.year} acquired in: {toc-tic:0.4f} seconds! 🌟")
+    
+    elif not args.year:
+        print(f"No year specified, presuming this year: {today.year}")
+
+        _pre_processing(today.year, args.day)
+        runner_str = f"advent_of_code.y{today.year}.d{args.day}"
+        runner = importlib.import_module(runner_str)
+        runner.run(today.year, args.day)
 
     else:
         _pre_processing(args.year, args.day)

@@ -1,7 +1,7 @@
 """Module for fetching AoC Input"""
 from pathlib import Path
 
-from requests import get, HTTPError
+from requests import get
 
 
 def fetch(year: int, day: int) -> str:
@@ -29,11 +29,7 @@ def fetch(year: int, day: int) -> str:
     url = f"https://adventofcode.com/{year}/day/{day}/input"
 
     response = get(url, cookies=cookies)
-
-    try:
-        response.raise_for_status()
-    except HTTPError as err:
-        print(f"Something went wrong: {err=}")
+    response.raise_for_status()
 
     aoc_input = response.text.strip()
     print("-" * 15, " START OF INPUT ", "-" * 15)
