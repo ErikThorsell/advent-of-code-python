@@ -1,4 +1,4 @@
-"""Solution module for Day X, YEAR"""
+"""Solution module for Day $day, $year"""
 import copy
 import time
 from sys import maxsize

@@ -3,6 +3,7 @@ import argparse
 from datetime import datetime
 import importlib
 from pathlib import Path
+from string import Template
 import time
 
 from shutil import copyfile
@@ -32,7 +33,12 @@ def _pre_processing(year: int, day: int):
         solution_dir_path.mkdir(parents=True)
 
     if not solution_path.exists():
-        copyfile("templates/src.py", solution_path)
+        with open("templates/src.py") as in_f:
+            src = Template(in_f.read())
+            out = src.substitute({"day": day, "year": year})
+        with open(solution_path, 'w') as out_f:
+            out_f.write(out)
+
         print(f"A solution template has been created in: {solution_path}")
 
 
