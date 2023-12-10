@@ -5,10 +5,10 @@ from sys import maxsize
 def get_adjacent(x, y, dir):
     if dir == 4:
         return [
-            (x, y - 1),
-            (x, y + 1),
-            (x - 1, y),
-            (x + 1, y),
+            (x, y - 1),  # above
+            (x, y + 1),  # below
+            (x - 1, y),  # left
+            (x + 1, y),  # right
         ]
     if dir == 8:
         return [
