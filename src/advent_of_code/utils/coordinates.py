@@ -99,6 +99,22 @@ def draw_coordinates_dict(dictionary, empty="."):
     print()
 
 
+def coordinates_dict_to_string(dictionary, empty="."):
+    x_min = min(dictionary.keys(), key=itemgetter(0))[0]
+    y_min = min(dictionary.keys(), key=itemgetter(1))[1]
+    x_max = max(dictionary.keys(), key=itemgetter(0))[0]
+    y_max = max(dictionary.keys(), key=itemgetter(1))[1]
+    result = ""
+    for y in range(y_min, y_max + 1):
+        for x in range(x_min, x_max + 1):
+            if (x, y) in dictionary:
+                result += dictionary[(x, y)]
+            else:
+                result += empty
+        result += "\n"
+    return result
+
+
 def fold_grid(coordinates: List[Tuple[int, int]], instruction: str) -> List[Tuple[int, int]]:
     instruction = instruction.split()[-1]
     direction, coordinate = instruction.split("=")
