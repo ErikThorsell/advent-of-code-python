@@ -78,3 +78,20 @@ def dijkstra_grid(grid, start, goal):
                     continue
                 distances[(x, y)] = n_dist
                 heappush(heap, (n_dist, (x, y)))
+
+
+def get_grid_area(perimeter, with_perimeter=True):
+    """Shoelace formula: https://en.wikipedia.org/wiki/Shoelace_formula"""
+    area = 0
+    for i in range(len(perimeter) - 1):
+        x1, y1 = perimeter[i]
+        x2, y2 = perimeter[i + 1]
+        area += x1*y2 - x2*y1
+
+    perimeter = len(perimeter)
+    interior_area = abs(area) // 2 - perimeter // 2 + 1
+
+    if with_perimeter:
+        return interior_area + perimeter
+
+    return interior_area
