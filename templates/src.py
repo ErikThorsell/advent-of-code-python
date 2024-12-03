@@ -7,14 +7,12 @@ from advent_of_code.utils.fetch import fetch
 
 
 def test_1():
-    # Copy paste example here
     input = """"""
     answer = 0
     assert(solution_1(input) == answer)
     
 
 def test_2():
-    # Copy paste example here
     input = """"""
     answer = 0
     assert(solution_2(input) == answer)
@@ -24,14 +22,10 @@ def parse(input):
     ...
 
 
-# Guesses for Part 1
-#  99 | Too large
 def solution_1(input):
     return 0
 
 
-# Guesses for Part 2
-# 97 | Too small
 def solution_2(input):
     return 0
 
