@@ -4,8 +4,7 @@ import time
 from sys import maxsize
 
 from advent_of_code.utils.fetch import fetch
-from advent_of_code.utils.grid import print_grid
-from advent_of_code.utils.parse import parse_grid, parse_grid_str
+from advent_of_code.utils.parse import parse_grid_str
 
 
 def test_1():
@@ -40,33 +39,30 @@ MXMXAXMASX"""
 
 
 def word_search(grid, x, y, woi="XMAS"):
+
+    def is_in(grid, x, y):
+        return 0 <= x < len(grid[0]) and 0 <= y < len(grid)
+
     directions = [
-        (0, 1),
-        (0, -1),
-        (1, 0),
-        (-1, 0),
-        (1, 1),
-        (-1, -1),
-        (1, -1),
-        (-1, 1)
+    (-1, -1), (0, -1), (1, -1),
+    (-1,  0),          (1,  0),
+    (-1,  1), (0,  1), (1,  1)
     ]
     
-    rows = len(grid)
-    cols = len(grid[0])
-    strings = []
+    found = 0
     
     for dx, dy in directions:
-        word = []
+        match = True
         for i in range(len(woi)):
             nx, ny = x + i * dx, y + i * dy
-            if 0 <= nx < rows and 0 <= ny < cols:
-                word.append(grid[nx][ny])
-            else:
+            if not is_in(grid, nx, ny) or grid[nx][ny] != woi[i]:
+                match = False
                 break
-        if ''.join(word) == woi:
-            strings.append(''.join(word))
+        
+        if match:
+            found += 1
     
-    return strings
+    return found
 
 
 def solution_1(input):
@@ -76,8 +72,8 @@ def solution_1(input):
     for x in range(len(grid[0])):
         for y in range(len(grid)):
             if grid[x][y] == "X":
-                total += len(word_search(grid, x, y, "XMAS"))
-
+                total += word_search(grid, x, y)
+    
     return total
 
 
