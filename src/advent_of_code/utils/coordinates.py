@@ -99,6 +99,16 @@ def draw_coordinates_dict(dictionary, empty="."):
     print()
 
 
+def get_grid_dimensions_dict(dictionary) -> Tuple[int, int]:
+    x_min = min(dictionary.keys(), key=itemgetter(0))[0]
+    y_min = min(dictionary.keys(), key=itemgetter(1))[1]
+    x_max = max(dictionary.keys(), key=itemgetter(0))[0]
+    y_max = max(dictionary.keys(), key=itemgetter(1))[1]
+    width = x_max - x_min + 1
+    height = y_max - y_min + 1
+    return width, height
+
+
 def coordinates_dict_to_string(dictionary, empty="."):
     x_min = min(dictionary.keys(), key=itemgetter(0))[0]
     y_min = min(dictionary.keys(), key=itemgetter(1))[1]

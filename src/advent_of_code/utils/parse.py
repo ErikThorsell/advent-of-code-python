@@ -141,6 +141,25 @@ def parse_grid_str(input: str):
     return grid
 
 
+def parse_mover_in_grid(input):
+    rows = split_str_by_newline(input)
+
+    grid = {}
+    poi = (-1, -1)
+    dir = "."
+
+    for rx, row in enumerate(rows):
+        for cx, col in enumerate(row):
+            if col == "#":
+                grid[(cx, rx)] = col
+            if col in ["<", ">", "v", "^"]:
+                poi = (cx, rx)
+                dir = col
+
+    return grid, poi, dir
+
+
+
 def parse_bingo(input: str):
     def parse_bingo_boards(rows):
         str_boards = split_str_by_separator(rows, "\n\n")
