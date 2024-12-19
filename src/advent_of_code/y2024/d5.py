@@ -87,10 +87,10 @@ def topological_sort(update, graph):
         partial_graph[node] = []
         indegree[node] = 0
     
-    for num in update:
-        for succ_node in graph[num]:
+    for node in update:
+        for succ_node in graph[node]:
             if succ_node in update:
-                partial_graph[num].append(succ_node)
+                partial_graph[node].append(succ_node)
                 indegree[succ_node] += 1
     
     queue = deque([node for node in update if indegree[node] == 0])
@@ -135,8 +135,7 @@ def solution_2(input):
     
     total = 0 
     for update in updates:
-        tsorted = topological_sort(update, graph)
-        if not tsorted == update:
+        if (tsorted := topological_sort(update, graph)) != update:
             total += middle_page(tsorted)
     
     return total
