@@ -1,5 +1,7 @@
 """Solution module for Day 9, 2024"""
+from collections import defaultdict
 import copy
+import heapq
 import time
 from sys import maxsize
 
@@ -52,27 +54,54 @@ def parse(input):
 def solution_1(input):
     disk_map = parse(input)
     disk_map = move_blocks(disk_map)
-    checksum = sum(idx*num for idx, num in enumerate(disk_map))
-    return checksum
+    return sum(idx*num for idx, num in enumerate(disk_map))
 
 
-def move_files(chunky_map):
-    return chunky_map
+def parse_chunk(input):
+    lengths = [int(num) for num in input]
 
-def parse_chunks(input):
-    chunky_map = []
-    for idx, num in enumerate(input):
-        if idx % 2 == 0:
-            chunky_map.append(str(idx//2)*int(num))
+    filled_grid = {}
+    gaps = defaultdict(lambda: [])
+
+    cur_pos = 0
+    for i,num in enumerate(lengths):
+        if i%2 == 0:
+            filled_grid[i//2] = [cur_pos,num]
         else:
-            chunky_map.extend([None]*int(num))
-    return chunky_map
+            if num > 0:
+                heapq.heappush(gaps[num],cur_pos)
+        cur_pos += num
+
+    return filled_grid, gaps
+
+
+def move_files(files, gaps):
+
+    for idx in sorted(files.keys(), reverse=True):
+        file_start, file_len = files[idx]
+
+        potential_gaps = sorted([[gaps[gap_len][0], gap_len] for gap_len in gaps if gap_len >= file_len])
+        if potential_gaps:
+            gap_start, gap_len = potential_gaps[0]
+
+            if file_start > gap_start:
+                files[idx] = [gap_start, file_len]
+                remaining_gap_len = gap_len - file_len
+                heapq.heappop(gaps[gap_len])
+
+                if not gaps[gap_len]:
+                    del gaps[gap_len]
+
+                if remaining_gap_len:
+                    heapq.heappush(gaps[remaining_gap_len], gap_start + file_len)
+                    
+    return files
 
 
 def solution_2(input):
-    chunky_map = parse_chunks(input)
-    chunky_map = move_files(chunky_map)
-    return 0
+    files, gaps = parse_chunk(input)
+    files = move_files(files, gaps)
+    return sum(num * (length * (2 * start + length - 1) // 2) for num, (start, length) in files.items())
 
 
 def run(year: int, day: int):
@@ -89,9 +118,8 @@ def run(year: int, day: int):
     s1 = solution_1(copy.deepcopy(input))
     toc = time.perf_counter()
     print(f"Solution for problem 1: {s1}, acquired in: {toc-tic:0.4f} seconds")
-#
-#    tic = time.perf_counter()
-#    s2 = solution_2(copy.deepcopy(input))
-#    toc = time.perf_counter()
-#    print(f"Solution for problem 2: {s2}, acquired in: {toc-tic:0.4f} seconds")
-#
+
+    tic = time.perf_counter()
+    s2 = solution_2(copy.deepcopy(input))
+    toc = time.perf_counter()
+    print(f"Solution for problem 2: {s2}, acquired in: {toc-tic:0.4f} seconds")
