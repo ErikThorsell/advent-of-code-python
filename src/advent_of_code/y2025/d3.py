@@ -48,7 +48,7 @@ def solution_2(input):
     size = 12
 
     for bank in input.split("\n"):
-        f = len(bank)
+        n = len(bank)
 
         chosen_digits = []
         start = 0
